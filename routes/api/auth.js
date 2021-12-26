@@ -8,8 +8,8 @@ app.post('/api/login', (req, res) => {
 
   async function verify() {
     const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: CLIENT_ID,
+        idToken: req.body.credential,
+        audience: req.app.get('GOOGLE_CLIENT_ID'),
     });
     const payload = ticket.getPayload();
     const userid = payload['sub'];
