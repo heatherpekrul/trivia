@@ -3,14 +3,19 @@ var app = express.Router();
 
 app.get('/', (req, res) => {
   res.render('index', {
-    subject: 'EJS template engine',
+    subject: 'Trivia Home',
     name: 'our template',
     link: 'https://google.com'
   });
-
-  // res.send('Hello World!');
 });
 
+app.get('/login', (req, res) => {
+  res.render('login', {
+    subject: 'Trivia Login',
+    name: 'our template',
+    link: 'https://google.com'
+  });
+});
 
 app.get('/test', (req, res) => {
   res.send('Test Hello!');
