@@ -29,7 +29,10 @@ router.post('/', (req, res) => {
 
     console.log('set session value to ', req.session);
   }
-  verify().catch(console.error);
+  verify().catch(function (err) {
+    console.error(err);
+    res.redirect('/login');
+  });
 
   req.session.save(function(err) {
     res.redirect('/');

@@ -1,7 +1,18 @@
-var express = require('express');
-var router  = express.Router();
+const express = require('express');
+const AuthMiddleware = require('./middleware/auth');
+const router  = express.Router();
 
 router.use('/api/login', require('./api/login'));
+
+router.get('/login', (req, res) => {
+  res.render('login', {
+    subject: 'Trivia Login',
+    name: 'our template',
+    link: 'https://google.com'
+  });
+});
+
+router.use(AuthMiddleware);
 
 router.get('/', function(req, res) {
   console.log({
@@ -11,14 +22,6 @@ router.get('/', function(req, res) {
   });
   res.render('index', {
     subject: 'Trivia Home',
-    name: 'our template',
-    link: 'https://google.com'
-  });
-});
-
-router.get('/login', (req, res) => {
-  res.render('login', {
-    subject: 'Trivia Login',
     name: 'our template',
     link: 'https://google.com'
   });
