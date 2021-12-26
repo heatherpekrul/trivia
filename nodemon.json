@@ -1,0 +1,16 @@
+{
+  "watch": [
+    "server/",
+    "."
+  ],
+  "ignore": [
+    "dist/*",
+    "client/*",
+    "tests/*"
+  ],
+  "ext": "js,scss",
+  "delay": "0",
+  "execMap": {
+    "js": "node -r dotenv/config app.js"
+  }
+}

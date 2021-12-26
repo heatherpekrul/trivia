@@ -5,8 +5,17 @@
   "main": "app.js",
   "scripts": {
     "start:server": "DEBUG=express-mysql-session* node -r dotenv/config app.js",
+    "watch": "npm-run-all --parallel watch:build watch:server",
+    "watch:server": "cross-env NODE_ENV=development nodemon app.js",
+    "watch:build": "cross-env NODE_ENV=development vue-cli-service build --mode=development --watch",
+    "build": "vue-cli-service build",
     "lint": "eslint *.js",
-    "lint:fix": "eslint *.js --fix"
+    "lint:fix": "eslint *.js --fix",
+    "stylelint": "stylelint \"**/*.scss\"",
+    "stylelint:fix": "stylelint \"**/*.scss\" --fix"
+  },
+  "engines": {
+    "node": "^12.22.8"
   },
   "author": "",
   "license": "ISC",
@@ -19,9 +28,28 @@
     "express-session": "^1.17.2",
     "google-auth-library": "^7.11.0",
     "mysql": "^2.18.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.3",
+    "vue-template-compiler": "^2.6.14",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
-    "eslint": "^8.5.0"
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@vue/cli-plugin-babel": "^4.5.15",
+    "@vue/cli-service": "^4.5.15",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.5.0",
+    "node-sass": "^5.0.0",
+    "nodemon": "^2.0.15",
+    "npm-run-all": "^4.1.5",
+    "sass-loader": "^10",
+    "stylelint": "^14.2.0",
+    "stylelint-config-standard": "^24.0.0",
+    "webpack-dev-middleware": "^5.3.0",
+    "webpack-hot-middleware": "^2.25.1"
   }
 }
