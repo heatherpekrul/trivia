@@ -61,7 +61,7 @@ app.use('/', require('./server/routes'));
 /* HMR */
 if (process.env.HMR_ENABLED === 'true') {
   const webpack = require('webpack');
-  const webpackConfig = require('node_modules/@vue/cli-service/webpack.config');
+  const webpackConfig = require('./node_modules/@vue/cli-service/webpack.config');
   const compiler = webpack(webpackConfig);
 
   app.use(require('webpack-dev-middleware')(compiler, {
