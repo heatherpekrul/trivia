@@ -5,7 +5,7 @@ const session = require('express-session');
 
 /* CONFIG */
 const app = express();
-const port = 3000;
+const port = process.env.APP_PORT;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.set('GOOGLE_CLIENT_ID', '329235712483-f2isifu37ih9eguiaha6aoe4hgeafkh3.apps.googleusercontent.com');

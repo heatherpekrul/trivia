@@ -14,3 +14,16 @@ Start server:
 ```
 npm run start:server
 ```
+
+### Linting
+
+ESLint
+
+```
+npm run lint
+```
+
+ESLint with Autofix Flag
+```
+npm run lint:fix
+```
