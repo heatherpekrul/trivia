@@ -1,22 +1,19 @@
 const express = require('express');
-const app = express.Router();
-
 const Login = require('./login');
+const app = express.Router();
 
 app.use(Login);
 
 app.get('/', (req, res) => {
   res.render('index', {
-    subject: 'Trivia Home'
+    subject: 'Trivia Home',
+    name: 'our template',
+    link: 'https://google.com'
   });
 });
 
 app.get('/test', (req, res) => {
   res.send('Test Hello!');
-});
-
-app.get('/error', (req, res) => {
-  res.render('error');
 });
 
 module.exports = app;

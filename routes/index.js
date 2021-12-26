@@ -1,24 +1,10 @@
 var express = require('express');
 var app = express.Router();
 
-app.get('/', (req, res) => {
-  res.render('index', {
-    subject: 'Trivia Home',
-    name: 'our template',
-    link: 'https://google.com'
-  });
-});
+const Api = require('./api');
+const Pages = require('./pages');
 
-app.get('/login', (req, res) => {
-  res.render('login', {
-    subject: 'Trivia Login',
-    name: 'our template',
-    link: 'https://google.com'
-  });
-});
-
-app.get('/test', (req, res) => {
-  res.send('Test Hello!');
-});
+app.use(Api);
+app.use(Pages);
 
 module.exports = app;
