@@ -21,19 +21,19 @@ router.post('/', (req, res) => {
     // const userid = payload['sub'];
     // console.log({ payload, userid });
 
-    req.session = {
-      user: {
-        email: payload.email,
-        name: payload.given_name,
-        image: payload.picture,
-      }
+    req.session.user = {
+      email: payload.email,
+      name: payload.given_name,
+      image: payload.picture,
     };
 
     console.log('set session value to ', req.session);
   }
   verify().catch(console.error);
 
-  res.redirect('/');
+  req.session.save(function(err) {
+    res.redirect('/');
+  });
 });
 
 module.exports = router;
