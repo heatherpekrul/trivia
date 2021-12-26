@@ -4,8 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start:server": "node -r dotenv/config app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:server": "DEBUG=express-mysql-session* node -r dotenv/config app.js",
+    "lint": "eslint *.js",
+    "lint:fix": "eslint *.js --fix"
   },
   "author": "",
   "license": "ISC",
@@ -14,8 +15,13 @@
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.2",
+    "express-mysql-session": "^2.1.7",
     "express-session": "^1.17.2",
     "google-auth-library": "^7.11.0",
+    "mysql": "^2.18.1",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "eslint": "^8.5.0"
   }
 }
