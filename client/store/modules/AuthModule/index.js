@@ -24,10 +24,11 @@ export default {
     reset({ commit }) {
       commit('reset');
     },
-    logout({ commit }) {
-      fetch('/api/logout', {
+    async logout({ commit }) {
+      await fetch('/api/logout', {
         method: 'POST',
       });
+      window.location.replace('/login');
     },
   },
 };
