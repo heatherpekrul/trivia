@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 router.use(function (req, res, next) {
-  if (!req.session && req.session.user) {
+  console.log(req.session.user);
+  if (!req.session || !req.session.user) {
     return res.redirect('/login');
   }
 

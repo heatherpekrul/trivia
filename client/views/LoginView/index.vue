@@ -1,9 +1,7 @@
 <template>
-  <nav class="nav">
-    <router-link :to="{ name: 'DashboardView'}">
-      Trivia
-    </router-link>
-  </nav>
+  <div class="login-view">
+    <h1>Login</h1>
+  </div>
 </template>
 
 <script src="./index.js"></script>

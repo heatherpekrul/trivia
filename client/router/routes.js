@@ -12,6 +12,13 @@ export default [
           /* webpackChunkName: "dashboard" */ '../views/DashboardView/index.vue'
         ),
       },
+      {
+        path: '/login',
+        name: 'LoginView',
+        component: () => import (
+          /* webpackChunkName: "login" */ '../views/LoginView/index.vue'
+        ),
+      }
     ],
   },
 ];
