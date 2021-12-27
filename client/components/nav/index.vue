@@ -4,7 +4,7 @@
       Trivia
     </router-link>
 
-    <a href="#" @click.prevent="onLogoutClick()">
+    <a href="#" @click.prevent="onLogoutClick()" v-if="isLoggedIn">
       Logout
     </a>
   </nav>

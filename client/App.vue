@@ -16,7 +16,16 @@ export default {
   name: 'App',
   components: {
     Nav,
-  }
+  },
+  mounted() {
+    if (AppData && AppData.user) {
+      let userData = JSON.parse(AppData.user);
+      userData = userData === {} ? null : userData;
+      this.$store.commit('AuthModule/setUser', userData);
+    } else {
+      this.$store.commit('AuthModule/reset');
+    }
+  },
 };
 </script>
 

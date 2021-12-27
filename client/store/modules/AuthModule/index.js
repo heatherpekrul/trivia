@@ -1,5 +1,7 @@
 import defaultState from './default';
 
+/* Auth Module */
+
 export default {
   namespaced: true,
 
@@ -8,15 +10,16 @@ export default {
   },
 
   getters: {
-    test: (state) => state.test,
+    isLoggedIn: (state) => !!state.user,
+    user: (state) => state.user,
   },
 
   mutations: {
     reset(state) {
       Object.assign(state, defaultState());
     },
-    setTest(state, test) {
-      state.test = test;
+    setUser(state, user) {
+      state.user = user;
     },
   },
 
@@ -28,6 +31,7 @@ export default {
       await fetch('/api/logout', {
         method: 'POST',
       });
+      commit('setUser', defaultState().user);
       window.location.replace('/login');
     },
   },
