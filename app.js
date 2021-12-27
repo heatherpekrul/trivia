@@ -11,6 +11,11 @@ app.set('view engine', 'ejs');
 app.set('GOOGLE_CLIENT_ID', '329235712483-f2isifu37ih9eguiaha6aoe4hgeafkh3.apps.googleusercontent.com');
 app.set('SESSION_SECRET', process.env.SESSION_SECRET);
 app.set('COOKIE_MAX_AGE', 1000 * 60 * 60 * 24); // 24 hours
+app.set('MYSQL_HOST', process.env.MYSQL_HOST);
+app.set('MYSQL_PORT', process.env.MYSQL_PORT);
+app.set('MYSQL_USER', process.env.MYSQL_USER);
+app.set('MYSQL_PASSWORD', process.env.MYSQL_PASSWORD);
+app.set('MYSQL_DB', process.env.MYSQL_DB);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'dist')));
@@ -23,11 +28,11 @@ const MySQLStore = require('express-mysql-session')(session);
 
 const mysqlSessionConfig = {
   connectionLimit: 10,
-	host: process.env.MYSQL_HOST,
-	port: process.env.MYSQL_PORT,
-	user: process.env.MYSQL_USER,
-	password: process.env.MYSQL_PASSWORD,
-	database: process.env.MYSQL_DB,
+	host: app.get('MYSQL_HOST'),
+	port: app.get('MYSQL_PORT'),
+	user: app.get('MYSQL_USER'),
+	password: app.get('MYSQL_PASSWORD'),
+	database: app.get('MYSQL_DB'),
 };
 
 const sessionStore = new MySQLStore(mysqlSessionConfig);

@@ -1,8 +1,8 @@
-var express = require('express');
+const express = require('express');
 const { OAuth2Client } = require('google-auth-library');
-var router  = express.Router();
+const router  = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/api/login', (req, res) => {
   const client = new OAuth2Client(req.app.get('GOOGLE_CLIENT_ID'));
 
   async function verify() {

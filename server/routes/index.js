@@ -2,7 +2,7 @@ const express = require('express');
 const router  = express.Router();
 
 const Api = require('./api');
-const AuthMiddleware = require('./middleware/auth');
+const AuthRedirectMiddleware = require('./middleware/authRedirect');
 const HomePage = require('./pages/home');
 const LoginPage = require('./pages/login');
 
@@ -10,7 +10,7 @@ router.use(Api);
 
 router.use(LoginPage);
 
-router.use(AuthMiddleware);
+router.use(AuthRedirectMiddleware);
 
 router.use(HomePage);
 
