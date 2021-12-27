@@ -13,12 +13,12 @@ app.set('SESSION_SECRET', process.env.SESSION_SECRET);
 app.set('COOKIE_MAX_AGE', 1000 * 60 * 60 * 24); // 24 hours
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 /* SESSIONS */
-
 const MySQLStore = require('express-mysql-session')(session);
 
 const mysqlSessionConfig = {
@@ -55,7 +55,6 @@ console.log(sessionConfig);
 app.use(session(sessionConfig));
 
 /* ROUTES */
-
 app.use('/', require('./server/routes'));
 
 /* HMR */
@@ -79,7 +78,6 @@ if (process.env.HMR_ENABLED === 'true') {
 }
 
 /* HEY, LISTEN! */
-
 app.listen(port, () => {
   console.log(`Trivia app listening at http://localhost:${port}`);
 });
