@@ -23,6 +23,11 @@ export default {
   actions: {
     reset({ commit }) {
       commit('reset');
-    }
+    },
+    logout({ commit }) {
+      fetch('/api/logout', {
+        method: 'POST',
+      });
+    },
   },
 };

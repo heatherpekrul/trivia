@@ -1,7 +1,7 @@
 import defaultState from './default';
 
 /* Modules */
-import ExampleModule from './modules/ExampleModule';
+import AuthModule from './modules/AuthModule';
 
 export default {
   state: {
@@ -24,11 +24,11 @@ export default {
   actions: {
     reset({ dispatch, commit }) {
       commit('reset');
-      dispatch('ExampleModule/reset');
+      dispatch('AuthModule/reset');
     }
   },
 
   modules: {
-    ExampleModule,
+    AuthModule,
   },
 };

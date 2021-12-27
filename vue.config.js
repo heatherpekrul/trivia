@@ -4,6 +4,9 @@ module.exports = {
   runtimeCompiler: true,
 
   chainWebpack: (config) => {
+    config.plugins.delete('html');
+    config.plugins.delete('prefetch');
+    config.plugins.delete('preload');
     config.output.filename('js/app.js');
     config.output.chunkFilename('js/[name].js');
   },

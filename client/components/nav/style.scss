@@ -1,0 +1,6 @@
+.nav {
+  background: $color-peach;
+  @include font-accent();
+  color: white;
+  padding: 1rem;
+}

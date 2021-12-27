@@ -30,8 +30,6 @@ const mysqlSessionConfig = {
 	database: process.env.MYSQL_DB,
 };
 
-console.log(mysqlSessionConfig);
-
 const sessionStore = new MySQLStore(mysqlSessionConfig);
 
 const sessionConfig = {
@@ -49,8 +47,6 @@ if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
   sessionConfig.cookie.secure = true;
 }
-
-console.log(sessionConfig);
 
 app.use(session(sessionConfig));
 

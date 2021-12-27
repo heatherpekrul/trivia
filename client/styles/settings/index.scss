@@ -1,1 +1,53 @@
+/* Colors */
 $color-party-girl: #fc338f;
+$color-peach: #dc8d6e;
+$color-charcoal: #373a36;
+$color-white-sand: #e6e2dd;
+
+/* Typography */
+$font-base-size: 16px;
+
+@mixin font-lora {
+  font-family: 'Lora', serif;
+  font-weight: 400;
+}
+
+@mixin font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+@mixin font-primary {
+  @include font-lora();
+}
+
+@mixin font-accent {
+  @include font-montserrat();
+}
+
+/* Display */
+@mixin flex-container {
+  max-width: 960px;
+  padding: 1em;
+  margin: 0 auto;
+}
+
+@mixin breakpoint() {
+  @media (min-width: 480px) {
+    @content;
+  }
+}
+
+@mixin clearfix() {
+  &::before,
+  &::after {
+    content: " ";
+    display: table;
+  }
+
+  &::after {
+    clear: both;
+  }
+}

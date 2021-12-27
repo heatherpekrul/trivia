@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div class="app">
+    <Nav />
     <transition
       name="fade-view"
       mode="out-in"
@@ -10,8 +11,12 @@
 </template>
 
 <script>
+import Nav from './components/nav/index.vue';
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    Nav,
+  }
 };
 </script>
 
