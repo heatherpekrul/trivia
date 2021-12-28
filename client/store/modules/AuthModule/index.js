@@ -31,8 +31,14 @@ export default {
       await fetch('/api/logout', {
         method: 'POST',
       });
-      commit('setUser', defaultState().user);
+      commit('reset');
       window.location.replace('/login');
+    },
+    async deleteMyData({ commit, dispatch }) {
+      await fetch ('/api/deleteMyData', {
+        method: 'POST',
+      });
+      dispatch('logout');
     },
   },
 };

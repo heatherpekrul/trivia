@@ -7,18 +7,21 @@
     >
       <router-view />
     </transition>
+    <Footer />
   </div>
 </template>
 
 <script>
+import Footer from './components/footer/index.vue';
 import Nav from './components/nav/index.vue';
 export default {
   name: 'App',
   components: {
+    Footer,
     Nav,
   },
   mounted() {
-    if (AppData && AppData.user) {
+    if (typeof AppData !== 'undefined' && AppData && AppData.user) {
       let userData = JSON.parse(AppData.user);
       userData = userData === {} ? null : userData;
       this.$store.commit('AuthModule/setUser', userData);

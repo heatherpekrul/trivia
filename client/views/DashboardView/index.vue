@@ -18,7 +18,9 @@
             {{ game.name }}
           </td>
           <td>
-            Start
+            <router-link :to="{ name: 'GamePresentationView', params: { id: game.game_id } }">
+              Start / Resume
+            </router-link>
           </td>
           <td>
             Delete

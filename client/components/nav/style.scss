@@ -3,8 +3,39 @@
   @include font-accent();
   color: white;
   padding: 1rem;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+
+  a.nav__logo {
+    font-size: 2rem;
+    align-self: flex-start;
+    text-align: left;
+    flex-grow: 1;
+
+    &:hover {
+      background-color: transparent;
+      color: $color-charcoal;
+    }
+  }
 
   a {
     color: white;
+    flex: 0 1 auto;
+    text-align: right;
+    background-color: transparent;
+    padding: 0.5rem;
+    line-height: 1;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s, color 0.2s;
+
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+
+    &:hover {
+      background-color: rgba(black, 0.33);
+    }
   }
 }
