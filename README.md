@@ -17,7 +17,7 @@ npm run start:server
 
 ### Environment Variables
 
-A `.env.` file in the root project directory will include necessary environment variables for local development.
+A `.env` file in the root project directory will include necessary environment variables for local development.
 
 ```
 touch .env
