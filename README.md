@@ -10,12 +10,22 @@ Node / Express / Vue / MySQL
 npm install
 ```
 
-Start server:
+### NVM
+
+Install NVM. It's easiest with Homebrew:
+
 ```
-npm run start:server
+brew install nvm
 ```
 
-### Environment Variables
+Then install and use the version of Node that this application uses:
+
+```
+nvm install 12.22.8
+nvm use 12.22.8
+```
+
+### Environment variables
 
 A `.env` file in the root project directory will include necessary environment variables for local development.
 
@@ -36,6 +46,11 @@ NODE_ENV=development
 APP_PORT=3000
 HMR_ENABLED=true
 LOG_LEVEL=INFO
+```
+
+### Start server
+```
+npm run start:server
 ```
 
 ## Linting
