@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start:server": "DEBUG=express-mysql-session* node -r dotenv/config app.js",
+    "start:server": "node -r dotenv/config app.js",
+    "start:server:debug": "DEBUG=express-mysql-session* node -r dotenv/config app.js",
     "watch": "npm-run-all --parallel watch:build watch:server",
     "watch:server": "cross-env NODE_ENV=development nodemon app.js",
     "watch:build": "cross-env NODE_ENV=development vue-cli-service build --mode=development --watch",
