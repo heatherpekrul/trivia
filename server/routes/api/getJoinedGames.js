@@ -23,14 +23,18 @@ router.get('/api/getJoinedGames', async (req, res) => {
 
     let gameResults = [];
      
-    /* TODO: write query for getting joined games so that they can be rejoined */
+    /* This query returns the list of games where the person is already registered and is not the owner. */
     await connection.query(`
-      SELECT *
-      FROM games
-      INNER JOIN game_participants ON (games.id = game_participants.game_id)
-      INNER JOIN users ON (game_participants.user_id = users.id)
-      WHERE users.email = '${userId}' AND game_participants.is_owner = 1
-    `, function (error, results, fields) {
+    select games.id, games.name
+    from games
+    where id in (
+        select game_id
+        from game_participants
+        where user_id = ?
+        and is_owner = 0
+    )`,
+    [userId],
+    function (error, results, fields) {
       if (error) throw error;
 
       if (results) {

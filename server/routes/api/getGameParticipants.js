@@ -4,7 +4,7 @@ const mysql = require('mysql');
 const IsAuthenticated = require('../../utilities/isAuthenticated');
 const GetUserId = require('../../utilities/getUserId');
 
-router.get('/api/getGameParticipants', async (req, res) => {
+router.get('/api/getGameParticipants/:gameId', async (req, res) => {
   if (!IsAuthenticated(req)) return res.sendStatus(401);
 
   try {
@@ -20,17 +20,18 @@ router.get('/api/getGameParticipants', async (req, res) => {
     connection.connect();
   
     const userId = GetUserId(req);
+    const gameId = req.params.gameId; 
 
     let gameResults = [];
      
-    /* TODO: write query for fetching a list of participants for a given game id, excluding game owner */
     await connection.query(`
-      SELECT *
-      FROM games
-      INNER JOIN game_participants ON (games.id = game_participants.game_id)
-      INNER JOIN users ON (game_participants.user_id = users.id)
-      WHERE users.email = '${userId}' AND game_participants.is_owner = 1
-    `, function (error, results, fields) {
+      select u1.id, u1.email
+      from game_participants g1
+      inner join users u1 on (g1.user_id = u1.id)
+      where game_id = ?
+      and is_owner != 1
+    `, [gameId],
+     function (error, results, fields) {
       if (error) throw error;
 
       if (results) {

@@ -14,7 +14,7 @@ module.exports = {
   css: {
     extract: {
       filename: 'css/app.css',
-      chunkFilename: 'css/[name].css'
+      chunkFilename: 'css/[name].css',
     },
     loaderOptions: {
       scss: {
