@@ -4,7 +4,7 @@ Node / Express / Vue / MySQL
 
 ## Local Development
 
-### Install dependencies:
+### Install dependencies
 
 ```
 npm install
@@ -55,13 +55,26 @@ npm run start:server
 
 ## Linting
 
-ESLint
+### ESLint
 
 ```
 npm run lint
 ```
 
-ESLint with Autofix Flag
+ESLint with autofix flag
+
 ```
 npm run lint:fix
+```
+
+### Stylelint
+
+```
+npm run stylelint
+```
+
+Stylelint with autofix flag
+
+```
+npm run stylelint:fix
 ```
