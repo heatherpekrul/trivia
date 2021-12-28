@@ -33,7 +33,7 @@ export default {
       .then((response) => response.text())
       .then((response) => {
         const games = JSON.parse(response);
-        commit('setGames', games);
+        commit('setOwnedGames', games);
       })
       .catch((e) => console.error(e));
     },
@@ -44,7 +44,7 @@ export default {
       .then((response) => response.text())
       .then((response) => {
         const games = JSON.parse(response);
-        commit('setGames', games);
+        commit('setJoinedGames', games);
       })
       .catch((e) => console.error(e));
     },
