@@ -10,14 +10,14 @@ export default {
   },
 
   getters: {
-    games: (state) => state.games,
+    ownedGames: (state) => state.ownedGames,
   },
 
   mutations: {
     reset(state) {
       Object.assign(state, defaultState());
     },
-    setGames(state, games) {
+    setOwnedGames(state, games) {
       state.games = games;
     },
   },
@@ -26,8 +26,8 @@ export default {
     reset({ commit }) {
       commit('reset');
     },
-    async fetchGames({ commit }) {
-      await fetch('/api/getGames', {
+    async fetchOwnedGames({ commit }) {
+      await fetch('/api/getOwnedGames', {
         method: 'GET',
       })
       .then((response) => response.text())
@@ -36,6 +36,20 @@ export default {
         commit('setGames', games);
       })
       .catch((e) => console.error(e));
+    },
+    async fetchJoinedGames({ commit }) {
+      await fetch('/api/getJoinedGames', {
+        method: 'GET',
+      })
+      .then((response) => response.text())
+      .then((response) => {
+        const games = JSON.parse(response);
+        commit('setGames', games);
+      })
+      .catch((e) => console.error(e));
+    },
+    async joinGame({ commit }) {
+
     },
   },
 };

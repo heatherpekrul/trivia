@@ -1,6 +1,16 @@
 <template>
   <div class="container join-game-view">
-    join game
+    <h1>Join Game</h1>
+
+    <form @submit.prevent="onFormSubmit()">
+      <fieldset>
+        <input type="text" placeholder="Game Code">
+      </fieldset>
+
+      <fieldset>
+        <input type="submit" value="Join Game">
+      </fieldset>
+    </form>
   </div>
 </template>
 

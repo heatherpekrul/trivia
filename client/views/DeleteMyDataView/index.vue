@@ -2,9 +2,13 @@
   <div class="container delete-my-data-view">
     <h1>Delete My Data</h1>
 
-    <p>Using the button below will delete all data associated with your user in the Trivia database.</p>
+    <p>
+      Using the button below will <strong>permanently</strong> delete all data associated with your user in the Trivia database.
+    </p>
 
-    <p>Once your data has been deleted, it <strong>cannot be recovered</strong>.</p>
+    <p>
+      Once your data has been deleted, it <strong>cannot be recovered</strong>.
+    </p>
 
     <button @click="onDeleteClick()">
       Delete my data

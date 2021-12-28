@@ -9,16 +9,9 @@ export default {
     ...defaultState(),
   },
 
-  getters: {
-    test: (state) => state.test,
-  },
-
   mutations: {
     reset(state) {
       Object.assign(state, defaultState());
-    },
-    setTest(state, test) {
-      state.test = test;
     },
   },
 

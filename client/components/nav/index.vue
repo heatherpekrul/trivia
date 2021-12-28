@@ -10,6 +10,8 @@
 
     <a href="#" @click.prevent="onLogoutClick()" v-if="isLoggedIn">
       Logout
+
+      <img :src="user.image" alt="user.name" v-if="user.image" class="nav__profile-pic">
     </a>
   </nav>
 </template>

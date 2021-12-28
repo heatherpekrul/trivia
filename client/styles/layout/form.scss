@@ -1,0 +1,37 @@
+form {
+  fieldset {
+    border: none;
+    width: 100%;
+  }
+
+  input[type=text] {
+    background: white;
+    padding: 1rem;
+    width: 100%;
+    border: none;
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
+    transition: box-shadow 0.5s;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0px 0px 1rem 0px rgba($color-peach,1);
+    }
+  }
+}
+
+input[type=submit],
+  button {
+    @include font-accent();
+    background-color: $color-peach;
+    color: $color-charcoal;
+    cursor: pointer;
+    border: none;
+    padding: 1rem;
+    transition: background-color 0.2s, color 0.2s;
+    border-radius: 0.25em;
+
+    &:hover {
+      background-color: darken($color-peach, 20%);
+      color: white;
+    }
+  }

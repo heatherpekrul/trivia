@@ -8,6 +8,13 @@
   justify-content: flex-end;
   align-items: center;
 
+  &__profile-pic {
+    border-radius: 50%;
+    height: 2rem;
+    width: 2rem;
+    vertical-align: middle;
+  }
+
   a.nav__logo {
     font-size: 2rem;
     align-self: flex-start;

@@ -3,7 +3,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: 'DashboardView',
   mounted() {
-    this.fetchGames();
+    this.fetchOwnedGames();
   },
   computed: {
     ...mapGetters('GamesModule', [
@@ -12,7 +12,7 @@ export default {
   },
   methods: {
     ...mapActions('GamesModule', [
-      'fetchGames',
+      'fetchOwnedGames',
     ]),
   },
 };

@@ -5,6 +5,7 @@ export default {
   computed: {
     ...mapGetters('AuthModule', [
       'isLoggedIn',
+      'user',
     ]),
   },
   methods: {

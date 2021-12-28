@@ -1,3 +1,4 @@
 export default () => ({
-  games: [],
+  joinedGames: [],
+  ownedGames: [],
 });
