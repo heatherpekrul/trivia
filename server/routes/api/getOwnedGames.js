@@ -3,16 +3,15 @@ const router = express.Router();
 const GetDatabaseConnection = require('../../utilities/getDatabaseConnection');
 const IsAuthenticated = require('../../utilities/isAuthenticated');
 const GetUserId = require('../../utilities/getUserId');
+const IsValidId = require('../../utilities/isValidId');
 
 router.get('/api/getOwnedGames', async (req, res) => {
-  if (!IsAuthenticated(req)) return res.status(401).send();
-
   try {
-    res.setHeader('Content-Type', 'application/json');
+    if (!IsAuthenticated(req)) return res.status(401).send();
+    const userId = GetUserId(req);
+    if (!IsValidId(userId)) return res.status(401).send();
 
     const connection = await GetDatabaseConnection(req);
-  
-    const userId = GetUserId(req);
      
     const [rows] = await connection.execute(`
       SELECT games.*
@@ -21,6 +20,7 @@ router.get('/api/getOwnedGames', async (req, res) => {
       WHERE users.id = '${userId}'
     `);
 
+    res.setHeader('Content-Type', 'application/json');
     return res.send(rows);
   } catch (e) {
     console.error(e);

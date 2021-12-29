@@ -1,8 +1,22 @@
+import { mapActions } from "vuex";
+
 export default {
   name: 'JoinGameView',
+  data() {
+    return {
+      entryKey: '',
+    };
+  },
   methods: {
-    onFormSubmit() {
-      console.log('we submitted fuck yes');
+    ...mapActions('GamesModule', [
+      'joinGame',
+    ]),
+    async onFormSubmit() {
+      try {
+        await this.joinGame(this.entryKey);
+      } catch (e) {
+        console.error(e);
+      }
     },
   },
 };

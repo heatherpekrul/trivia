@@ -12,7 +12,7 @@ router.post('/api/deleteGame/:gameId', async (req, res) => {
     if (!IsValidId(userId)) return res.status(401).send();
   
     if (!IsValidId(req.params.gameId)) return res.status(400).send();
-    const gameId = req.params.gameId; 
+    const gameId = req.params.gameId;
 
     const connection = await GetDatabaseConnection(req);
      

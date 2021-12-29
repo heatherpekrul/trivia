@@ -3,43 +3,25 @@ const router = express.Router();
 const GetDatabaseConnection = require('../../utilities/getDatabaseConnection');
 const IsAuthenticated = require('../../utilities/isAuthenticated');
 const GetUserId = require('../../utilities/getUserId');
+const IsValidId = require('../../utilities/isValidId');
 
 router.get('/api/getJoinedGames', async (req, res) => {
-  if (!IsAuthenticated(req)) return res.status(401).send();
-
   try {
-    res.setHeader('Content-Type', 'application/json');
-
-    const connection = GetDatabaseConnection(req);
-     
-    connection.connect();
-  
+    if (!IsAuthenticated(req)) return res.status(401).send();
     const userId = GetUserId(req);
+    if (!IsValidId(userId)) return res.status(401).send();
 
-    let gameResults = [];
+    const connection = await GetDatabaseConnection(req);
      
-    /* This query returns the list of games where the person is already registered and is not the owner. */
-    await connection.query(`
-    select games.id, games.name
-    from games
-    where id in (
-        select game_id
-        from game_participants
-        where user_id = ?
-        and is_owner = 0
-    )`,
-    [userId],
-    function (error, results, fields) {
-      if (error) throw error;
+    const [rows] = await connection.execute(`
+      SELECT games.*
+      FROM games
+      INNER JOIN game_participants ON games.id = game_participants.game_id
+      WHERE game_participants.user_id = '${userId}'
+    `);
 
-      if (results) {
-        gameResults = JSON.parse(JSON.stringify(results));
-      }
-
-      return res.send(gameResults);
-    });
-     
-    connection.end();
+    res.setHeader('Content-Type', 'application/json');
+    return res.send(rows);
   } catch (e) {
     console.error(e);
     return res.status(500).send();

@@ -12,6 +12,7 @@ export default {
   getters: {
     currentGame: (state) => state.currentGame,
     currentRound: (state) => state.currentRound,
+    joinedGames: (state) => state.joinedGames,
     ownedGames: (state) => state.ownedGames,
   },
 
@@ -24,6 +25,9 @@ export default {
     },
     setCurrentRound(state, round) {
       state.currentRound = round;
+    },
+    setJoinedGames(state, games) {
+      state.joinedGames = games;
     },
     setOwnedGames(state, games) {
       state.ownedGames = games;
@@ -72,10 +76,13 @@ export default {
       })
       .catch((e) => console.error(e));
     },
-    async joinGame({ commit }, gameId) {
-      await fetch('/api/joinGame', {
+    async joinGame({ commit }, entryKey) {
+      const entryKeyRegex = new RegExp('^[A-Za-z0-9_]*$', 'g');
+      if (!entryKeyRegex.test(entryKey)) throw new Error('Invalid entry key');
+
+      await fetch(`/api/joinGame/${entryKey}`, {
         method: 'POST',
-      })
+      });
     },
   },
 };

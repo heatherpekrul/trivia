@@ -4,7 +4,7 @@
 
     <form @submit.prevent="onFormSubmit()">
       <fieldset>
-        <input type="text" placeholder="Game Code">
+        <input type="text" placeholder="Game Code" v-model="entryKey">
       </fieldset>
 
       <fieldset>

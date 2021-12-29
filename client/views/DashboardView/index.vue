@@ -34,6 +34,33 @@
     <div v-else>
       Sorry, you have not created any games.
     </div>
+
+    <h2>Joined Games</h2>
+
+    <table v-if="joinedGames && joinedGames.length > 0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Rejoin Game</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="game in joinedGames" v-bind:key="game.id">
+          <td>
+            {{ game.name }}
+          </td>
+          <td>
+            <router-link :to="{ name: 'GameParticipantView', params: { id: game.id } }">
+              Rejoin
+            </router-link>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div v-else>
+      Sorry, you have not joined any games.
+    </div>
   </div>
 </template>
 
