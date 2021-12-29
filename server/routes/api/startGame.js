@@ -1,27 +1,24 @@
 const express = require('express');
 const router  = express.Router();
-const mysql = require('mysql');
+const GetDatabaseConnection = require('../../utilities/getDatabaseConnection');
 
-router.post('/api/startGame', (req, res) => {
+router.post('/api/startGame/:gameId', (req, res) => {
   if (!IsAuthenticated(req)) return res.sendStatus(401);
 
   try {
     res.setHeader('Content-Type', 'application/json');
 
-    const connection = mysql.createConnection({
-      host : req.app.get('MYSQL_HOST'),
-      user : req.app.get('MYSQL_USER'),
-      password : req.app.get('MYSQL_PASSWORD'),
-      database : req.app.get('MYSQL_DB'),
-    });
-     
+    const connection = GetDatabaseConnection(req);
     connection.connect();
   
     const userId = GetUserId(req);
 
-    let gameResults = [];
+    /**
+     * Query that updates the game with the id of the first round
+     * of the given game above where the logged-in user is the owner
+     */
      
-    await connection.query(`
+    /* await connection.query(`
       SELECT *
       FROM games
       INNER JOIN game_participants ON (games.id = game_participants.game_id)
@@ -32,9 +29,9 @@ router.post('/api/startGame', (req, res) => {
 
       if (results) {
         gameResults = JSON.parse(JSON.stringify(results));
-      }
+      } */
 
-      return res.send(gameResults);
+      return res.send();
     });
      
     connection.end();

@@ -13,12 +13,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="game in ownedGames" v-bind:key="game.game_id">
+        <tr v-for="game in ownedGames" v-bind:key="game.id">
           <td>
             {{ game.name }}
           </td>
           <td>
-            <router-link :to="{ name: 'GamePresentationView', params: { id: game.game_id } }">
+            <router-link :to="{ name: 'GamePresentationView', params: { id: game.id } }">
               Start / Resume
             </router-link>
           </td>

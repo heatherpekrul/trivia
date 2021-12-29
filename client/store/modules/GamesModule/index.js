@@ -10,12 +10,16 @@ export default {
   },
 
   getters: {
+    currentGame: (state) => state.currentGame,
     ownedGames: (state) => state.ownedGames,
   },
 
   mutations: {
     reset(state) {
       Object.assign(state, defaultState());
+    },
+    setCurrentGame(state, game) {
+      state.currentGame = game;
     },
     setOwnedGames(state, games) {
       state.ownedGames = games;

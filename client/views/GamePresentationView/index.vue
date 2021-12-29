@@ -1,6 +1,8 @@
 <template>
-  <div class="game-participant-view">
-    game participant view - will be google casted
+  <div class="game-presentation-view">
+    <div class="game-presentation-view__wrapper">
+      <PresentationTitle :game="currentGame" />
+    </div>
   </div>
 </template>
 

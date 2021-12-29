@@ -7,10 +7,13 @@ router.post('/api/login', async (req, res) => {
   try {
     const client = new OAuth2Client(req.app.get('GOOGLE_CLIENT_ID'));
 
+    const connection = GetDatabaseConnection(req);
+    connection.connect();
+
     async function verify() {
       const ticket = await client.verifyIdToken({
-          idToken: req.body.credential,
-          audience: req.app.get('GOOGLE_CLIENT_ID'),
+        idToken: req.body.credential,
+        audience: req.app.get('GOOGLE_CLIENT_ID'),
       });
       const payload = ticket.getPayload();
 
@@ -21,27 +24,24 @@ router.post('/api/login', async (req, res) => {
       };
     }
 
-    await verify().catch(function (err) {
+    await verify().then(async () => {
+      await connection.query(`
+        INSERT INTO users (email, name, image_url)
+        VALUES ('${req.session.user.email}', '${req.session.user.name}', '${req.session.user.image_url}')
+        ON DUPLICATE KEY UPDATE email = '${req.session.user.email}', name = '${req.session.user.name}', image_url = '${req.session.user.image_url}';
+      `, function (error, results, fields) {
+        if (error) throw error;
+      });
+    })
+    .then(() => {
+      req.session.save(function(err) {
+        connection.end();
+        return res.redirect('/');
+      });
+    }).catch(function (err) {
       console.error(err);
+      connection.end();
       return res.redirect('/login');
-    });
-
-    const connection = GetDatabaseConnection(req);
-    connection.connect();
-
-    await connection.query(`
-      INSERT INTO users (email, name, image_url)
-      VALUES ('${req.session.user.email}', '${req.session.user.name}', '${req.session.user.image_url}')
-      ON DUPLICATE KEY UPDATE email = '${req.session.user.email}', name = '${req.session.user.name}', image_url = '${req.session.user.image_url}';
-    `, function (error, results, fields) {
-      if (error) throw error;
-      req.session.user.id = results.insertId;
-    });
-     
-    connection.end();
-
-    req.session.save(function(err) {
-      return res.redirect('/');
     });
   } catch (e) {
     console.error(e);
