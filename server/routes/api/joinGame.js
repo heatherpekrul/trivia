@@ -1,21 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql');
+const GetDatabaseConnection = require('../../utilities/getDatabaseConnection');
 const IsAuthenticated = require('../../utilities/isAuthenticated');
 const GetUserId = require('../../utilities/getUserId');
 
 router.post('/api/joinGame/:gameId', async (req, res) => {
-  if (!IsAuthenticated(req)) return res.sendStatus(401);
+  if (!IsAuthenticated(req)) return res.status(401).send();
 
   try {
     res.setHeader('Content-Type', 'application/json');
 
-    const connection = mysql.createConnection({
-      host : req.app.get('MYSQL_HOST'),
-      user : req.app.get('MYSQL_USER'),
-      password : req.app.get('MYSQL_PASSWORD'),
-      database : req.app.get('MYSQL_DB'),
-    });
+    const connection = GetDatabaseConnection(req);
      
     connection.connect();
   
@@ -42,7 +37,7 @@ router.post('/api/joinGame/:gameId', async (req, res) => {
     connection.end();
   } catch (e) {
     console.error(e);
-    return res.sendStatus(500);
+    return res.status(500).send();
   }
 });
 

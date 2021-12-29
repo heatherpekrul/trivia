@@ -11,6 +11,7 @@ export default {
 
   getters: {
     currentGame: (state) => state.currentGame,
+    currentRound: (state) => state.currentRound,
     ownedGames: (state) => state.ownedGames,
   },
 
@@ -21,6 +22,9 @@ export default {
     setCurrentGame(state, game) {
       state.currentGame = game;
     },
+    setCurrentRound(state, round) {
+      state.currentRound = round;
+    },
     setOwnedGames(state, games) {
       state.ownedGames = games;
     },
@@ -30,14 +34,19 @@ export default {
     reset({ commit }) {
       commit('reset');
     },
-    async fetchOwnedGames({ commit }) {
-      await fetch('/api/getOwnedGames', {
+    async deleteGame({}, gameId) {
+      await fetch(`/api/deleteGame/${gameId}`, {
+        method: 'POST',
+      })
+      .catch((e) => console.error(e));
+    },
+    async fetchCurrentRound({ commit }, gameId) {
+      await fetch(`/api/getCurrentRound/${gameId}`, {
         method: 'GET',
       })
-      .then((response) => response.text())
       .then((response) => {
-        const games = JSON.parse(response);
-        commit('setOwnedGames', games);
+        const round = JSON.parse(response.text());
+        commit('setCurrentRound', round);
       })
       .catch((e) => console.error(e));
     },
@@ -52,8 +61,21 @@ export default {
       })
       .catch((e) => console.error(e));
     },
-    async joinGame({ commit }) {
-
+    async fetchOwnedGames({ commit }) {
+      await fetch('/api/getOwnedGames', {
+        method: 'GET',
+      })
+      .then((response) => response.text())
+      .then((response) => {
+        const games = JSON.parse(response);
+        commit('setOwnedGames', games);
+      })
+      .catch((e) => console.error(e));
+    },
+    async joinGame({ commit }, gameId) {
+      await fetch('/api/joinGame', {
+        method: 'POST',
+      })
     },
   },
 };

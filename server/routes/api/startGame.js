@@ -3,7 +3,7 @@ const router  = express.Router();
 const GetDatabaseConnection = require('../../utilities/getDatabaseConnection');
 
 router.post('/api/startGame/:gameId', (req, res) => {
-  if (!IsAuthenticated(req)) return res.sendStatus(401);
+  if (!IsAuthenticated(req)) return res.status(401).send();
 
   try {
     res.setHeader('Content-Type', 'application/json');
@@ -37,7 +37,7 @@ router.post('/api/startGame/:gameId', (req, res) => {
     connection.end();
   } catch(e) {
     console.error(e);
-    res.sendStatus(500);
+    return res.status(500).send();
   }
 });
 

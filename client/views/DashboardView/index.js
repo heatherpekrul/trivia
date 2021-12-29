@@ -12,7 +12,11 @@ export default {
   },
   methods: {
     ...mapActions('GamesModule', [
+      'deleteGame',
       'fetchOwnedGames',
     ]),
+    async onDeleteGameClick(gameId) {
+      await this.deleteGame(gameId);
+    }
   },
 };

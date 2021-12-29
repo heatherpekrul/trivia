@@ -7,8 +7,7 @@ router.post('/api/login', async (req, res) => {
   try {
     const client = new OAuth2Client(req.app.get('GOOGLE_CLIENT_ID'));
 
-    const connection = GetDatabaseConnection(req);
-    connection.connect();
+    const connection = await GetDatabaseConnection(req);
 
     async function verify() {
       const ticket = await client.verifyIdToken({
@@ -24,28 +23,33 @@ router.post('/api/login', async (req, res) => {
       };
     }
 
-    await verify().then(async () => {
-      await connection.query(`
+    await verify()
+    .then(async () => {
+      await connection.execute(`
         INSERT INTO users (email, name, image_url)
         VALUES ('${req.session.user.email}', '${req.session.user.name}', '${req.session.user.image_url}')
         ON DUPLICATE KEY UPDATE email = '${req.session.user.email}', name = '${req.session.user.name}', image_url = '${req.session.user.image_url}';
-      `, function (error, results, fields) {
-        if (error) throw error;
-      });
+      `);
+
+      const [rows] = await connection.execute(`
+        SELECT id FROM users WHERE email = '${req.session.user.email}';
+      `);
+
+      req.session.user.id = rows[0].id;
     })
     .then(() => {
-      req.session.save(function(err) {
-        connection.end();
+      req.session.save((err) => {
+        if (err) console.error(err);
         return res.redirect('/');
       });
-    }).catch(function (err) {
+    })
+    .catch((err) => {
       console.error(err);
-      connection.end();
       return res.redirect('/login');
     });
   } catch (e) {
     console.error(e);
-    return res.sendStatus(500);
+    return res.status(500).send();
   }
 });
 

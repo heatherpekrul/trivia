@@ -1,7 +1,7 @@
 .game-presentation-view {
 
   &__wrapper {
-    height: 75vh;
+    aspect-ratio: 16 / 9;
     background: black;
     position: relative;
   }

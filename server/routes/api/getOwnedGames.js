@@ -5,38 +5,26 @@ const IsAuthenticated = require('../../utilities/isAuthenticated');
 const GetUserId = require('../../utilities/getUserId');
 
 router.get('/api/getOwnedGames', async (req, res) => {
-  if (!IsAuthenticated(req)) return res.sendStatus(401);
+  if (!IsAuthenticated(req)) return res.status(401).send();
 
   try {
     res.setHeader('Content-Type', 'application/json');
 
-    const connection = GetDatabaseConnection(req);
-     
-    connection.connect();
+    const connection = await GetDatabaseConnection(req);
   
     const userId = GetUserId(req);
-
-    let gameResults = [];
      
-    await connection.query(`
-      SELECT *
+    const [rows] = await connection.execute(`
+      SELECT games.*
       FROM games
       INNER JOIN users ON games.owner_user_id = users.id
-      WHERE users.email = '${userId}'
-    `, function (error, results, fields) {
-      if (error) throw error;
+      WHERE users.id = '${userId}'
+    `);
 
-      if (results) {
-        gameResults = JSON.parse(JSON.stringify(results));
-      }
-
-      return res.send(gameResults);
-    });
-     
-    connection.end();
+    return res.send(rows);
   } catch (e) {
     console.error(e);
-    return res.sendStatus(500);
+    return res.status(500).send();
   }
 });
 

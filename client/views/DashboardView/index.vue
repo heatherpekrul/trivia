@@ -23,7 +23,9 @@
             </router-link>
           </td>
           <td>
-            Delete
+            <a href="#" @click.prevent="onDeleteGameClick(game.id)">
+              Delete
+            </a>
           </td>
         </tr>
       </tbody>
