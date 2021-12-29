@@ -4,7 +4,7 @@
 
     <h2>My Games</h2>
 
-    <table v-if="games">
+    <table v-if="ownedGames">
       <thead>
         <tr>
           <th>Name</th>
@@ -13,7 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="game in games" v-bind:key="game.game_id">
+        <tr v-for="game in ownedGames" v-bind:key="game.game_id">
           <td>
             {{ game.name }}
           </td>

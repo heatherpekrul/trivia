@@ -7,7 +7,7 @@ export default {
   },
   computed: {
     ...mapGetters('GamesModule', [
-      'games',
+      'ownedGames',
     ]),
   },
   methods: {

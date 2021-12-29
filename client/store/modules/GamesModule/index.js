@@ -18,7 +18,7 @@ export default {
       Object.assign(state, defaultState());
     },
     setOwnedGames(state, games) {
-      state.games = games;
+      state.ownedGames = games;
     },
   },
 
