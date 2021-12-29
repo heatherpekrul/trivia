@@ -25,7 +25,7 @@
   }
 
   &__subheading {
-    @include font-primary;
+    @include font-primary();
     text-transform: none;
     font-style: italic;
     position: relative;

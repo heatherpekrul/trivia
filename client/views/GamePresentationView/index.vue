@@ -1,7 +1,12 @@
 <template>
   <div class="game-presentation-view">
     <div class="game-presentation-view__wrapper">
-      <PresentationTitle :game="currentGame" />
+      <ProgressBar />
+      <!-- <PresentationTitle :game="currentGame" /> -->
+      <PresentationRound :round="{
+        name: 'Round 1',
+        description: 'This is another exciting round',
+      }" />
     </div>
   </div>
 </template>

@@ -1,0 +1,29 @@
+.progress-bar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: flex;
+  padding: 1rem;
+  justify-content: space-between;
+
+  &__round,
+  &__question {
+    width: 5em;
+    height: 5em;
+    border-radius: 50%;
+    font-style: italic;
+    background: rgba($color-peach, 0.5);
+    text-align: center;
+    font-size: 0.65rem;
+    padding: 1em;
+    flex: 0 1 auto;
+
+    span {
+      display: block;
+    }
+  }
+
+  &__question {
+    align-self: flex-end;
+  }
+}

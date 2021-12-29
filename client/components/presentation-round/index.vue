@@ -1,6 +1,12 @@
 <template>
-  <div class="presentation-question">
-    presentation question component
+  <div class="presentation-round">
+    <h1 class="presentation-round__heading">
+      {{ round.name}}
+    </h1>
+
+    <h2 class="presentation-round__subheading">
+      {{ round.description}}
+    </h2>
   </div>
 </template>
 

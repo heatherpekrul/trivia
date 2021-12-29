@@ -1,1 +1,17 @@
-// .presentation-round
+.presentation-round {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-shadow: 0px 0px 0.25rem rgba(black, 0.75);
+
+  // &__heading { }
+
+  &__subheading {
+    @include font-primary();
+    text-transform: none;
+    font-style: italic;
+  }
+}
