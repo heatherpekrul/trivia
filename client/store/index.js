@@ -9,9 +9,19 @@ export default {
     ...defaultState(),
   },
 
+  getters: {
+    isLoading: (state) => state.apiCalls.length > 0,
+  },
+
   mutations: {
     reset(state) {
       Object.assign(state, defaultState());
+    },
+    apiCallStart(state, apiId) {
+      state.apiCalls.push(apiId);
+    },
+    apiCallEnd(state, apiId) {
+      state.apiCalls = state.apiCalls.filter((i) => i === apiId);
     },
   },
 

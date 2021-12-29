@@ -1,0 +1,34 @@
+.loading-overlay {
+  background: rgba($color-peach, 0.85);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-style: italic;
+  font-size: 3rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  animation: fade 0.25s ease-in-out;
+
+  &__message {
+    text-align: center;
+    flex: 0 1 auto;
+
+    &::before {
+      content: $emoji-peach;
+      display: block;
+      font-style: normal;
+    }
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -27,6 +27,10 @@ export default {
     reset({ commit }) {
       commit('reset');
     },
+
+    /**
+     * Logout
+     */
     async logout({ commit }) {
       await fetch('/api/logout', {
         method: 'POST',
@@ -34,10 +38,19 @@ export default {
       commit('reset');
       window.location.replace('/login');
     },
+
+    /**
+     * Delete My Data
+     */
     async deleteMyData({ dispatch }) {
+      const apiId = 'deleteMyData';
+      commit('apiCallStart', apiId, { root: true });
+
       await fetch ('/api/deleteMyData', {
         method: 'POST',
       });
+
+      commit('apiCallEnd', apiId, { root: true });
       dispatch('logout');
     },
   },

@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+    <LoadingOverlay v-show="isLoading" />
     <Nav />
     <transition
       name="fade-view"
@@ -12,11 +13,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Footer from './components/footer/index.vue';
+import LoadingOverlay from './components/loading-overlay/index.vue';
 import Nav from './components/nav/index.vue';
 export default {
   name: 'App',
   components: {
+    LoadingOverlay,
     Footer,
     Nav,
   },
@@ -28,6 +32,11 @@ export default {
     } else {
       this.$store.commit('AuthModule/reset');
     }
+  },
+  computed: {
+    ...mapGetters([
+      'isLoading'
+    ]),
   },
 };
 </script>
