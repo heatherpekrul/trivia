@@ -14,6 +14,7 @@ export default {
     async onFormSubmit() {
       try {
         await this.joinGame(this.entryKey);
+        this.$router.push({ name: 'DashboardView' });
       } catch (e) {
         console.error(e);
       }

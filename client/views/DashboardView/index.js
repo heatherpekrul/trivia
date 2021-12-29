@@ -17,9 +17,15 @@ export default {
       'deleteGame',
       'fetchJoinedGames',
       'fetchOwnedGames',
+      'removeJoinedGame',
     ]),
     async onDeleteGameClick(gameId) {
       await this.deleteGame(gameId);
+      await this.fetchOwnedGames();
+    },
+    async onRemoveJoinedGameClick(gameId) {
+      await this.removeJoinedGame(gameId);
+      await this.fetchJoinedGames();
     }
   },
 };

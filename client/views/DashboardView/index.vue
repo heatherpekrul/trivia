@@ -18,21 +18,21 @@
             {{ game.name }}
           </td>
           <td>
-            <router-link :to="{ name: 'GamePresentationView', params: { id: game.id } }">
+            <button @click="$router.push({ name: 'GamePresentationView', params: { id: game.id } })">
               Start / Resume
-            </router-link>
+            </button>
           </td>
           <td>
-            <a href="#" @click.prevent="onDeleteGameClick(game.id)">
+            <button @click.prevent="onDeleteGameClick(game.id)">
               Delete
-            </a>
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
 
     <div v-else>
-      Sorry, you have not created any games.
+      Sorry, you have not created any games yet.
     </div>
 
     <h2>Joined Games</h2>
@@ -41,7 +41,7 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>Rejoin Game</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -50,9 +50,13 @@
             {{ game.name }}
           </td>
           <td>
-            <router-link :to="{ name: 'GameParticipantView', params: { id: game.id } }">
+            <button @click="$router.push({ name: 'GameParticipantView', params: { id: game.id } })">
               Rejoin
-            </router-link>
+            </button>
+
+            <button @click="onRemoveJoinedGameClick(game.id)">
+              Remove
+            </button>
           </td>
         </tr>
       </tbody>
