@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql');
+const GetDatabaseConnection = require('../../utilities/getDatabaseConnection');
 const IsAuthenticated = require('../../utilities/isAuthenticated');
 const GetUserId = require('../../utilities/getUserId');
 
@@ -10,12 +10,7 @@ router.get('/api/getOwnedGames', async (req, res) => {
   try {
     res.setHeader('Content-Type', 'application/json');
 
-    const connection = mysql.createConnection({
-      host : req.app.get('MYSQL_HOST'),
-      user : req.app.get('MYSQL_USER'),
-      password : req.app.get('MYSQL_PASSWORD'),
-      database : req.app.get('MYSQL_DB'),
-    });
+    const connection = GetDatabaseConnection(req);
      
     connection.connect();
   
@@ -26,9 +21,8 @@ router.get('/api/getOwnedGames', async (req, res) => {
     await connection.query(`
       SELECT *
       FROM games
-      INNER JOIN game_participants ON (games.id = game_participants.game_id)
-      INNER JOIN users ON (game_participants.user_id = users.id)
-      WHERE users.email = '${userId}' AND game_participants.is_owner = 1
+      INNER JOIN users ON games.owner_user_id = users.id
+      WHERE users.email = '${userId}'
     `, function (error, results, fields) {
       if (error) throw error;
 
