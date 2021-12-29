@@ -17,7 +17,7 @@ router.post('/api/login', async (req, res) => {
       req.session.user = {
         email: payload.email,
         name: payload.given_name,
-        image: payload.picture,
+        image_url: payload.picture,
       };
     }
 
@@ -30,9 +30,12 @@ router.post('/api/login', async (req, res) => {
     connection.connect();
 
     await connection.query(`
-      INSERT IGNORE INTO users (email) VALUES ('${req.session.user.email}');
+      INSERT INTO users (email, name, image_url)
+      VALUES ('${req.session.user.email}', '${req.session.user.name}', '${req.session.user.image_url}')
+      ON DUPLICATE KEY UPDATE email = '${req.session.user.email}', name = '${req.session.user.name}', image_url = '${req.session.user.image_url}';
     `, function (error, results, fields) {
       if (error) throw error;
+      req.session.user.id = results.insertId;
     });
      
     connection.end();
