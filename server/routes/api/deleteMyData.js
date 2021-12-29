@@ -3,32 +3,24 @@ const router = express.Router();
 const GetDatabaseConnection = require('../../utilities/getDatabaseConnection');
 const IsAuthenticated = require('../../utilities/isAuthenticated');
 const GetUserId = require('../../utilities/getUserId');
+const IsValidId = require('../../utilities/isValidId');
 
 router.post('/api/deleteMyData', async (req, res) => {
-  if (!IsAuthenticated(req)) return res.status(401).send();
-
   try {
-    res.setHeader('Content-Type', 'application/json');
-
-    const connection = GetDatabaseConnection(req);
-     
-    connection.connect();
-  
+    if (!IsAuthenticated(req)) return res.status(401).send();
     const userId = GetUserId(req);
-     
-    /* The delete queries rely on foreign keys to be cascading. */
-    await connection.query(`
-      delete from users
-      where users.id = ?
-    `, 
-    [userId],
-     function (error, results, fields) {
-      if (error) throw error;
+    if (!IsValidId(userId)) return res.status(401).send();
 
+    const connection = await GetDatabaseConnection(req);
+
+    await connection.execute(`
+      DELETE FROM users
+      WHERE users.id = ${userId}
+    `);
+
+    req.session.destroy((err) => {
       return res.send();
     });
-     
-    connection.end();
   } catch (e) {
     console.error(e);
     return res.status(500).send();

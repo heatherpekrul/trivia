@@ -34,7 +34,7 @@ export default {
       commit('reset');
       window.location.replace('/login');
     },
-    async deleteMyData({ commit, dispatch }) {
+    async deleteMyData({ dispatch }) {
       await fetch ('/api/deleteMyData', {
         method: 'POST',
       });

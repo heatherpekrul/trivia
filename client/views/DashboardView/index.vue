@@ -4,7 +4,7 @@
 
     <h2>My Games</h2>
 
-    <table v-if="ownedGames">
+    <table v-if="ownedGames && ownedGames.length > 0">
       <thead>
         <tr>
           <th>Name</th>
