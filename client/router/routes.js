@@ -1,3 +1,5 @@
+import store from '../store';
+
 export default [
   {
     path: '/',
@@ -6,7 +8,7 @@ export default [
     },
     children: [
       {
-        path: '',
+        path: '/',
         name: 'DashboardView',
         component: () => import(
           /* webpackChunkName: "dashboard" */ '../views/DashboardView/index.vue'
@@ -25,6 +27,14 @@ export default [
         component: () => import (
           /* webpackChunkName: "present" */ '../views/GamePresentationView/index.vue'
         ),
+        beforeEnter: async (to, from, next) => {
+          await store.dispatch('GamesModule/fetchCurrentGame', to.params.id)
+            .then(() => next())
+            .catch((e) => {
+              console.error(e);
+              next({ name: 'NotFoundView' });
+            });
+          },
       },
       {
         path: '/game/:id',
@@ -46,7 +56,15 @@ export default [
         component: () => import (
           /* webpackChunkName: "delete-my-data" */ '../views/DeleteMyDataView/index.vue'
         ),
-      }
+      },
+      {
+        path: '/404',
+        alias: '*',
+        name: 'NotFoundView',
+        component: () => import (
+          /* webpackChunkName: "not-found" */ '../views/NotFoundView/index.vue'
+        ),
+      },
     ],
   },
 ];

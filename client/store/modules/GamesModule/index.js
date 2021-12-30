@@ -11,9 +11,12 @@ export default {
 
   getters: {
     currentGame: (state) => state.currentGame,
+    currentGameUsers: (state) => state.currentGameUsers,
     currentRound: (state) => state.currentRound,
     isCurrentGameTitleScreen: (state) => {
-
+      return !state.currentGame.current_round_id
+        && !state.currentGame.current_question_id
+        && !state.currentGame.is_completed;
     },
     joinedGames: (state) => state.joinedGames,
     ownedGames: (state) => state.ownedGames,
@@ -25,6 +28,9 @@ export default {
     },
     setCurrentGame(state, game) {
       state.currentGame = game;
+    },
+    setCurrentGameUsers(state, users) {
+      state.currentGameUsers = users;
     },
     setCurrentRound(state, round) {
       state.currentRound = round;
@@ -155,9 +161,9 @@ export default {
 
     /**
      * Load Current Game
-     * @param {gameId} gameId 
+     * @param {integer} gameId 
      */
-    async fetchCurrentGame({ commit}, gameId) {
+    async fetchCurrentGame({ commit }, gameId) {
       const apiId = 'getCurrentGame';
       commit('apiCallStart', apiId, { root: true });
 
@@ -171,6 +177,29 @@ export default {
         .then((data) => {
           if (!data || data.length !== 1) throw new Error('Invalid game setup');
           commit('setCurrentGame', data[0]);
+        })
+        .catch((e) => {
+          throw e;
+        });
+    },
+
+    /**
+     * Fetch Current Game Users
+     * @param {integer} gameId
+     */
+    async fetchCurrentGameUsers({ commit }, gameId) {
+      const apiId = 'getGameUsers';
+      commit('apiCallStart', apiId, { root: true });
+
+      await fetch(`/api/getGameParticipants/${gameId}`)
+        .then((response) => {
+          commit('apiCallEnd', apiId, { root: true });
+          if (!response.ok) throw new Error(response.statusText);
+          return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          commit('setCurrentGameUsers', data);
         })
         .catch((e) => {
           throw e;

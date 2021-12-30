@@ -1,10 +1,14 @@
+import Vue from 'vue';
+import Vuex from 'vuex';
 import defaultState from './default';
 
 /* Modules */
 import AuthModule from './modules/AuthModule';
 import GamesModule from './modules/GamesModule';
 
-export default {
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
   state: {
     ...defaultState(),
   },
@@ -37,4 +41,6 @@ export default {
     AuthModule,
     GamesModule,
   },
-};
+});
+
+export default store;

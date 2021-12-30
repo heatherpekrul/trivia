@@ -2,41 +2,26 @@ const express = require('express');
 const router = express.Router();
 const GetDatabaseConnection = require('../../utilities/getDatabaseConnection');
 const IsAuthenticated = require('../../utilities/isAuthenticated');
-const GetUserId = require('../../utilities/getUserId');
+const IsValidId = require('../../utilities/isValidId');
 
 router.get('/api/getGameParticipants/:gameId', async (req, res) => {
-  if (!IsAuthenticated(req)) return res.status(401).send();
-
   try {
+    if (!IsAuthenticated(req)) return res.status(401).send();
+
+    if (!IsValidId(req.params.gameId)) return res.status(400).send();
+    const gameId = req.params.gameId;
+
+    const connection = await GetDatabaseConnection(req);
+     
+    const [rows] = await connection.execute(`
+      SELECT users.id, users.name, users.image_url
+      FROM game_participants gp
+      INNER JOIN users ON gp.user_id = users.id
+      WHERE gp.game_id = '${gameId}'
+    `);
+
     res.setHeader('Content-Type', 'application/json');
-
-    const connection = GetDatabaseConnection(req);
-     
-    connection.connect();
-  
-    const userId = GetUserId(req);
-    const gameId = req.params.gameId; 
-
-    let gameResults = [];
-     
-    await connection.query(`
-      select u1.id, u1.email
-      from game_participants g1
-      inner join users u1 on (g1.user_id = u1.id)
-      where game_id = ?
-      and is_owner != 1
-    `, [gameId],
-     function (error, results, fields) {
-      if (error) throw error;
-
-      if (results) {
-        gameResults = JSON.parse(JSON.stringify(results));
-      }
-
-      return res.send(gameResults);
-    });
-     
-    connection.end();
+    return res.send(rows);
   } catch (e) {
     console.error(e);
     return res.status(500).send();

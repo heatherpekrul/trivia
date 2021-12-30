@@ -44,12 +44,8 @@ export default {
         .catch((e) => console.error(e));
     },
 
-    async onResumeStartGameClick(gameId) {
-      await this.fetchCurrentGame(gameId)
-        .then(() => {
-          this.$router.push({ name: 'GamePresentationView', params: { id: gameId } });
-        })
-        .catch((e) => console.error(e));
+    onResumeStartGameClick(gameId) {
+      this.$router.push({ name: 'GamePresentationView', params: { id: gameId } });
     },
   },
 };
