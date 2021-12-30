@@ -41,12 +41,34 @@ $font-base-size: 16px;
 /* Display */
 @mixin flex-container {
   max-width: 960px;
-  padding: 2em;
+  padding: 2rem;
   margin: 0 auto;
+
+  @include breakpoint() {
+    padding: 3rem;
+  }
 }
 
-@mixin breakpoint() {
-  @media (min-width: 480px) {
+$breakpoint-sm: 480px;
+$breakpoint-md: 1024px;
+$breakpoint-lg: 1920px;
+@mixin breakpoint($size: 'sm') {
+  $min-width: 0px;
+
+  @if $size == 'sm' {
+    $min-width: $breakpoint-sm;
+  }
+  @else if $size == 'md' {
+    $min-width: $breakpoint-md;
+  }
+  @else if $size == 'lg' {
+    $min-width: $breakpoint-lg;
+  }
+  @else {
+    @error "Breakpoint size option #{$size} is invalid.";
+  }
+  
+  @media (min-width: $min-width) {
     @content;
   }
 }

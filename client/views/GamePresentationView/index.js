@@ -14,9 +14,19 @@ export default {
     PresentationTitle,
     ProgressBar,
   },
+  data() {
+    return {
+      isFullScreen: false,
+    };
+  },
   computed: {
     ...mapGetters('GamesModule', [
       'currentGame',
     ]),
+  },
+  methods: {
+    onToggleFullScreenClick() {
+      this.isFullScreen = !this.isFullScreen;
+    },
   },
 };

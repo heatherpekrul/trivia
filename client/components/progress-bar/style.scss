@@ -18,6 +18,10 @@
     padding: 1em;
     flex: 0 1 auto;
 
+    @include breakpoint(md) {
+      font-size: 1rem;
+    }
+
     span {
       display: block;
     }

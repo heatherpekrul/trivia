@@ -35,9 +35,10 @@ button {
   color: $color-charcoal;
   cursor: pointer;
   border: none;
-  padding: 1rem;
+  padding: 1em;
   transition: background-color 0.2s, color 0.2s;
   border-radius: 0.25em;
+  font-size: 1em;
 
   &:not(:last-child) {
     margin-right: 1rem;

@@ -17,7 +17,7 @@
             {{ game.name }}
           </td>
           <td>
-            <button @click="$router.push({ name: 'GamePresentationView', params: { id: game.id } })">
+            <button @click="onResumeStartGameClick(game.id)">
               Start / Resume
             </button>
 

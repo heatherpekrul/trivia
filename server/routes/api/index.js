@@ -3,6 +3,7 @@ const router  = express.Router();
 
 const DeleteGame = require('./deleteGame');
 const DeleteMyData = require('./deleteMyData');
+const GetCurrentGame = require('./getCurrentGame');
 const GetGameParticipants = require('./getGameParticipants');
 const GetJoinedGames = require('./getJoinedGames');
 const GetOwnedGames = require('./getOwnedGames');
@@ -13,6 +14,7 @@ const RemoveJoinedGame = require('./removeJoinedGame');
 
 router.use(DeleteGame);
 router.use(DeleteMyData);
+router.use(GetCurrentGame);
 router.use(GetGameParticipants);
 router.use(GetJoinedGames);
 router.use(GetOwnedGames);

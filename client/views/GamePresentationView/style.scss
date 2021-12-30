@@ -1,8 +1,32 @@
 .game-presentation-view {
 
   &__wrapper {
-    aspect-ratio: 16 / 9;
+    height: 100vh;
     background: black;
     position: relative;
+
+    &--full {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    &__controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: +1;
+      font-size: 0.5rem;
+      padding: 1rem;
+      opacity: 0.25;
+      transition: opacity 0.5s ease-in;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
   }
 }

@@ -12,6 +12,9 @@ export default {
   getters: {
     currentGame: (state) => state.currentGame,
     currentRound: (state) => state.currentRound,
+    isCurrentGameTitleScreen: (state) => {
+
+    },
     joinedGames: (state) => state.joinedGames,
     ownedGames: (state) => state.ownedGames,
   },
@@ -148,6 +151,30 @@ export default {
       .catch((e) => {
         throw e;
       });
+    },
+
+    /**
+     * Load Current Game
+     * @param {gameId} gameId 
+     */
+    async fetchCurrentGame({ commit}, gameId) {
+      const apiId = 'getCurrentGame';
+      commit('apiCallStart', apiId, { root: true });
+
+      await fetch(`/api/getCurrentGame/${gameId}`)
+        .then((response) => {
+          commit('apiCallEnd', apiId, { root: true });
+          if (!response.ok) throw new Error(response.statusText);
+          return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          if (!data || data.length !== 1) throw new Error('Invalid game setup');
+          commit('setCurrentGame', data[0]);
+        })
+        .catch((e) => {
+          throw e;
+        });
     },
 
     /**

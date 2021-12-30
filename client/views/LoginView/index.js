@@ -15,8 +15,8 @@ export default {
         text: 'sign_in_with',
         shape: 'rectangular',
         logo_alignment: 'left',
-        width: 250,
-        height: 50,
+        /* width: 250,
+        height: 50, */
       });
      }
   },
