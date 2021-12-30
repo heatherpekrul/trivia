@@ -33,15 +33,10 @@
       flex-grow: 1;
       font-size: 2rem;
     }
-
-    &:hover {
-      background-color: transparent;
-      color: $color-charcoal;
-    }
   }
 
   a {
-    color: white;
+    color: $color-charcoal;
     text-align: right;
     background-color: transparent;
     padding: 0.5rem;
@@ -57,7 +52,7 @@
     }
 
     &:hover {
-      color: $color-charcoal;
+      color: black;
     }
   }
 }

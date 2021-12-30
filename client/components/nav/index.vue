@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav">
+  <nav class="nav" aria-label="Main Navigation">
     <router-link :to="{ name: 'DashboardView' } " class="nav__logo">
       🍑 Trivia
     </router-link>

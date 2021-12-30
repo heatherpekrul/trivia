@@ -5,7 +5,7 @@
         &copy; Copyright 2021 Heather Pekrul. All rights reserved.
       </div>
 
-      <nav>
+      <nav aria-label="Footer Navigation">
         <router-link :to="{ name: 'DeleteMyDataView' } " v-if="isLoggedIn">
           Delete My Data
         </router-link>
