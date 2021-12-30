@@ -53,9 +53,13 @@ export default {
       await fetch(`/api/deleteGame/${gameId}`, {
           method: 'POST',
         })
-        .catch((e) => console.error(e));
-
-      commit('apiCallEnd', apiId, { root: true });
+        .then((response) => {
+          commit('apiCallEnd', apiId, { root: true });
+          if(!response.ok) throw new Error(response.statusText);
+        })
+        .catch((e) => {
+          throw e;
+        });
     },
 
     /**
@@ -67,13 +71,16 @@ export default {
       commit('apiCallStart', apiId, { root: true });
 
       await fetch(`/api/getCurrentRound/${gameId}`)
-        .then((response) => response.json())
-        .then((data) => {
+        .then((response) => {
+          commit('apiCallEnd', apiId, { root: true });
+          if (!response.ok) throw new Error(response.statusText);
+
+          const data = response.json();
           commit('setCurrentRound', data);
         })
-        .catch((e) => console.error(e));
-
-      commit('apiCallEnd', apiId, { root: true });
+        .catch((e) => {
+          throw e;
+        });
     },
 
     /**
@@ -84,14 +91,18 @@ export default {
       commit('apiCallStart', apiId, { root: true });
 
       await fetch('/api/getJoinedGames')
+        .then((response) => {
+          commit('apiCallEnd', apiId, { root: true });
+          if (!response.ok) throw new Error(response.statusText);
+          return response;
+        })
         .then((response) => response.json())
         .then((data) => {
-          const games = data;
-          commit('setJoinedGames', games);
+          commit('setJoinedGames', data);
         })
-        .catch((e) => console.error(e));
-
-      commit('apiCallEnd', apiId, { root: true });
+        .catch((e) => {
+          throw e;
+        });
     },
 
     /**
@@ -102,14 +113,18 @@ export default {
       commit('apiCallStart', apiId, { root: true });
 
       await fetch('/api/getOwnedGames')
+        .then((response) => {
+          commit('apiCallEnd', apiId, { root: true });
+          if (!response.ok) throw new Error(response.statusText);
+          return response;
+        })
         .then((response) => response.json())
         .then((data) => {
-          const games = data;
-          commit('setOwnedGames', games);
+          commit('setOwnedGames', data);
         })
-        .catch((e) => console.error(e));
-
-      commit('apiCallEnd', apiId, { root: true });
+        .catch((e) => {
+          throw e;
+        });
     },
 
     /**
@@ -125,9 +140,14 @@ export default {
 
       await fetch(`/api/joinGame/${entryKey}`, {
         method: 'POST',
+      })
+      .then((response) => {
+        commit('apiCallEnd', apiId, { root: true });
+        if (!response.ok) throw new Error(response.statusText);
+      })
+      .catch((e) => {
+        throw e;
       });
-
-      commit('apiCallEnd', apiId, { root: true });
     },
 
     /**
@@ -140,9 +160,14 @@ export default {
 
       await fetch(`/api/removeJoinedGame/${gameId}`, {
         method: 'POST',
+      })
+      .then((response) => {
+        commit('apiCallEnd', apiId, { root: true });
+        if (!response.ok) throw new Error(response.statusText);
+      })
+      .catch((e) => {
+        throw e;
       });
-
-      commit('apiCallEnd', apiId, { root: true });
     }
   },
 };

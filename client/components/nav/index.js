@@ -13,7 +13,10 @@ export default {
       'logout'
     ]),
     async onLogoutClick() {
-      await this.logout();
+      await this.logout()
+        .catch((e) => {
+          console.error(e);
+        });
     }
   },
 };

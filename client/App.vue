@@ -2,12 +2,14 @@
   <div class="app">
     <LoadingOverlay v-show="isLoading" />
     <Nav />
-    <transition
-      name="fade-view"
-      mode="out-in"
-    >
-      <router-view />
-    </transition>
+    <main class="meat">
+      <transition
+        name="fade-view"
+        mode="out-in"
+      >
+        <router-view />
+      </transition>
+    </main>
     <Footer />
   </div>
 </template>

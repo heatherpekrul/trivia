@@ -34,24 +34,38 @@ export default {
     async logout({ commit }) {
       await fetch('/api/logout', {
         method: 'POST',
+      })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.statusText);
+
+        commit('reset');
+        window.location.replace('/login');
+      })
+      .catch((e) => {
+        throw e;
       });
-      commit('reset');
-      window.location.replace('/login');
     },
 
     /**
      * Delete My Data
      */
-    async deleteMyData({ dispatch }) {
+    async deleteMyData({ commit, dispatch }) {
       const apiId = 'deleteMyData';
       commit('apiCallStart', apiId, { root: true });
 
       await fetch ('/api/deleteMyData', {
         method: 'POST',
-      });
+      })
+        .then((response) => {
+          commit('apiCallEnd', apiId, { root: true });
+          if (!response.ok) throw new Error(response.statusText);
 
-      commit('apiCallEnd', apiId, { root: true });
-      dispatch('logout');
+          commit('reset');
+          window.location.replace('/login');
+        })
+        .catch((e) => {
+          throw e;
+        });
     },
   },
 };

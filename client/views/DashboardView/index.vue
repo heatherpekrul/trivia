@@ -8,8 +8,7 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>Start Game</th>
-          <th>Delete Game</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -21,8 +20,7 @@
             <button @click="$router.push({ name: 'GamePresentationView', params: { id: game.id } })">
               Start / Resume
             </button>
-          </td>
-          <td>
+
             <button @click.prevent="onDeleteGameClick(game.id)">
               Delete
             </button>

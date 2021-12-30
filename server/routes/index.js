@@ -16,7 +16,7 @@ router.use(HomePage);
 
 // 404
 router.use(function(req, res, next) {
-  res.send('oh no');
+  res.status(404).send('oh no');
 });
 
 module.exports = router;

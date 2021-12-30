@@ -3,4 +3,8 @@
 
 .container {
   @include flex-container();
+
+  > *:first-child {
+    margin-top: 0;
+  }
 }

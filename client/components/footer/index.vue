@@ -1,7 +1,9 @@
 <template>
-  <div class="footer">
+  <footer class="footer">
     <div class="container">
-      &copy; Copyright 2021 Heather Pekrul. All rights reserved.
+      <div class="colophon">
+        &copy; Copyright 2021 Heather Pekrul. All rights reserved.
+      </div>
 
       <nav>
         <router-link :to="{ name: 'DeleteMyDataView' } " v-if="isLoggedIn">
@@ -9,7 +11,7 @@
         </router-link>
       </nav>
     </div>
-  </div>
+  </footer>
 </template>
 
 <script src="./index.js"></script>

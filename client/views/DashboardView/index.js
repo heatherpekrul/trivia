@@ -3,8 +3,15 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: 'DashboardView',
   mounted() {
-    this.fetchJoinedGames();
-    this.fetchOwnedGames();
+    this.fetchJoinedGames()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    this.fetchOwnedGames()
+      .catch((e) => {
+        console.error(e);
+      });
   },
   computed: {
     ...mapGetters('GamesModule', [
@@ -20,12 +27,26 @@ export default {
       'removeJoinedGame',
     ]),
     async onDeleteGameClick(gameId) {
-      await this.deleteGame(gameId);
-      await this.fetchOwnedGames();
+      await this.deleteGame(gameId)
+        .catch((e) => {
+          console.error(e);
+        });
+
+      await this.fetchOwnedGames()
+        .catch((e) => {
+          console.error(e);
+        });
     },
     async onRemoveJoinedGameClick(gameId) {
-      await this.removeJoinedGame(gameId);
-      await this.fetchJoinedGames();
+      await this.removeJoinedGame(gameId)
+        .catch((e) => {
+          console.error(e);
+        });
+
+      await this.fetchJoinedGames()
+        .catch((e) => {
+          console.error(e);
+        });
     }
   },
 };

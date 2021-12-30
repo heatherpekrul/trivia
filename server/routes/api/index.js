@@ -21,4 +21,12 @@ router.use(Login);
 router.use(Logout);
 router.use(RemoveJoinedGame);
 
+router.get('/api/*', (req, res) => {
+  res.sendStatus(404);
+});
+
+router.post('/api/*', (req, res) => {
+  res.sendStatus(404);
+});
+
 module.exports = router;

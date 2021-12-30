@@ -10,6 +10,10 @@
       Once your data has been deleted, it <strong>cannot be recovered</strong>.
     </p>
 
+    <Message v-if="message" :type="message.type">
+      {{ message.message }}
+    </Message>
+
     <button @click="onDeleteClick()">
       Delete my data
     </button>

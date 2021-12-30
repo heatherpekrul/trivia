@@ -5,7 +5,7 @@
 }
 
 body {
-  background: $color-charcoal;
+  background: darken($color-charcoal, 5%);
   color: $color-white-sand;
   @include font-primary();
   margin: 0;
@@ -16,6 +16,10 @@ body {
   @include breakpoint() {
     font-size: $font-base-size;
   }
+}
+
+main.meat {
+  background: $color-charcoal;
 }
 
 h1,
@@ -43,14 +47,14 @@ table {
 }
 
 thead {
-  background: rgba(black, 0.2);
+  background: darken($color-charcoal, 5%);
 }
 
 td,
 th {
   margin: 0;
   padding: 1rem;
-  border: 1px solid rgba(black, 0.2);
+  border: 1px solid darken($color-charcoal, 5%);
 }
 
 th {

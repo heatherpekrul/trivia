@@ -4,6 +4,8 @@ $color-peach: #dc8d6e;
 $color-charcoal: #373a36;
 $color-white-sand: #e6e2dd;
 $color-flame: #df461e;
+$color-sunstone: #fdb060;
+$color-olive: #908a27;
 
 /* Emojis */
 $emoji-peach: '🍑';
@@ -39,7 +41,7 @@ $font-base-size: 16px;
 /* Display */
 @mixin flex-container {
   max-width: 960px;
-  padding: 1em;
+  padding: 2em;
   margin: 0 auto;
 }
 
