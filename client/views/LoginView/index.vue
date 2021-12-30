@@ -19,6 +19,8 @@
       This application is open to adults only. By logging in, you agree that you
       are at least 18 years old.
     </p>
+
+    <div ref="googlesignin"></div>
   </div>
 </template>
 

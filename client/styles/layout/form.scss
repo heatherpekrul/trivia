@@ -20,18 +20,22 @@ form {
 }
 
 input[type=submit],
-  button {
-    @include font-accent();
-    background-color: $color-peach;
-    color: $color-charcoal;
-    cursor: pointer;
-    border: none;
-    padding: 1rem;
-    transition: background-color 0.2s, color 0.2s;
-    border-radius: 0.25em;
+button {
+  @include font-accent();
+  background-color: $color-peach;
+  color: $color-charcoal;
+  cursor: pointer;
+  border: none;
+  padding: 1rem;
+  transition: background-color 0.2s, color 0.2s;
+  border-radius: 0.25em;
 
-    &:hover {
-      background-color: darken($color-peach, 20%);
-      color: white;
-    }
+  &:not(:last-child) {
+    margin-right: 1rem;
   }
+
+  &:hover {
+    background-color: darken($color-peach, 20%);
+    color: white;
+  }
+}

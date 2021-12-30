@@ -46,14 +46,14 @@ export default {
      * Delete Game
      * @param {integer} gameId 
      */
-    async deleteGame({}, gameId) {
+    async deleteGame({ commit }, gameId) {
       const apiId = 'deleteGame';
       commit('apiCallStart', apiId, { root: true });
 
       await fetch(`/api/deleteGame/${gameId}`, {
-        method: 'POST',
-      })
-      .catch((e) => console.error(e));
+          method: 'POST',
+        })
+        .catch((e) => console.error(e));
 
       commit('apiCallEnd', apiId, { root: true });
     },
@@ -73,7 +73,7 @@ export default {
         })
         .catch((e) => console.error(e));
 
-        commit('apiCallEnd', apiId, { root: true });
+      commit('apiCallEnd', apiId, { root: true });
     },
 
     /**
@@ -116,7 +116,7 @@ export default {
      * Join Game
      * @param {string} entryKey 
      */
-    async joinGame({ }, entryKey) {
+    async joinGame({ commit }, entryKey) {
       const apiId = 'joinGame';
       commit('apiCallStart', apiId, { root: true });
 
@@ -134,7 +134,7 @@ export default {
      * Remove Joined Game
      * @param {integer} gameId 
      */
-    async removeJoinedGame({}, gameId) {
+    async removeJoinedGame({ commit }, gameId) {
       const apiId = 'removeJoinedGame';
       commit('apiCallStart', apiId, { root: true });
 

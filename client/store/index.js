@@ -21,7 +21,7 @@ export default {
       state.apiCalls.push(apiId);
     },
     apiCallEnd(state, apiId) {
-      state.apiCalls = state.apiCalls.filter((i) => i === apiId);
+      state.apiCalls = state.apiCalls.filter((i) => i != apiId);
     },
   },
 
