@@ -12,6 +12,7 @@ const Login = require('./login');
 const Logout = require('./logout');
 const ProgressGame = require('./progressGame');
 const RemoveJoinedGame = require('./removeJoinedGame');
+const getQuestionAnswers = require('./getGameAnswers');
 
 router.use(DeleteGame);
 router.use(DeleteMyData);
@@ -24,6 +25,7 @@ router.use(Login);
 router.use(Logout);
 router.use(ProgressGame);
 router.use(RemoveJoinedGame);
+router.use(getQuestionAnswers);
 
 router.get('/api/*', (req, res) => {
   res.sendStatus(404);
