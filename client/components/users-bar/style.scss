@@ -1,0 +1,44 @@
+.users-bar {
+  display: none;
+
+  @include breakpoint(md) {
+    display: flex;
+    flex-flow: row wrap;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: 0.7rem;
+
+    .user {
+      padding: 1.5em;
+
+      &:nth-child(n + 20) {
+        &:not(:last-child) {
+          counter-increment: start-from;
+          background: #333333;
+          height: 0;
+          width: 0;
+          overflow: hidden;
+          clip: rect(0 0 0 0); 
+          padding: 0;
+        }
+
+        &:last-child {
+          height: auto;
+          width: auto;
+          overflow: visible;
+          clip: none;
+          padding: 1em;
+    
+          &::after {
+            content: "…"counter(start-from);
+            display: inline-block;
+            color: $color-sunstone;
+            margin-left: 1em;
+          }
+        }
+      }
+    }
+  }
+}

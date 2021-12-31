@@ -1,7 +1,9 @@
 import User from '../user/index.vue';
 
+const maxUsers = 20;
+
 export default {
-  name: 'Users',
+  name: 'UsersBar',
   components: {
     User,
   },

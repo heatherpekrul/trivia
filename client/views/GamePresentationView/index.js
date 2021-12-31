@@ -4,7 +4,7 @@ import PresentationRound from '../../components/presentation-round/index.vue';
 import PresentationScores from '../../components/presentation-scores/index.vue';
 import PresentationTitle from '../../components/presentation-title/index.vue';
 import ProgressBar from '../../components/progress-bar/index.vue';
-import Users from '../../components/users/index.vue';
+import UsersBar from '../../components/users-bar/index.vue';
 
 export default {
   name: 'GamePresentationView',
@@ -14,7 +14,7 @@ export default {
     PresentationScores,
     PresentationTitle,
     ProgressBar,
-    Users,
+    UsersBar,
   },
   mounted() {
     this.fetchCurrentGameUsers(this.$route.params.id);

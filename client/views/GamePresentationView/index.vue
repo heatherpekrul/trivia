@@ -19,7 +19,7 @@
         </button>
       </div>
 
-      <Users :users="currentGameUsers" />
+      <UsersBar :users="currentGameUsers" />
 
       <PresentationTitle
         v-if="isCurrentGameTitleScreen"

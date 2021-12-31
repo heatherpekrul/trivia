@@ -1,0 +1,12 @@
+.user {
+  @include font-accent();
+
+  img {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 50%;
+    width: 3em;
+    height: 3em;
+    margin-right: 0.5em;
+  }
+}

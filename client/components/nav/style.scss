@@ -6,7 +6,7 @@
   text-align: center;
   font-size: 0.75rem;
 
-  @include breakpoint() {
+  @include breakpoint(md) {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-end;
@@ -27,7 +27,7 @@
     text-align: center;
     display: block;
 
-    @include breakpoint() {
+    @include breakpoint(md) {
       align-self: flex-start;
       text-align: left;
       flex-grow: 1;
@@ -43,7 +43,7 @@
     line-height: 1;
     transition: background-color 0.2s, color 0.2s;
 
-    @include breakpoint() {
+    @include breakpoint(md) {
       flex: 0 1 auto;
 
       &:not(:last-child) {

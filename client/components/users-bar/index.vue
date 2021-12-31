@@ -1,5 +1,5 @@
 <template>
-  <div class="users">
+  <div class="users-bar">
     <User
       v-for="user in users"
       v-bind:key="user.id"
