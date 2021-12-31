@@ -8,7 +8,7 @@
 
     <form @submit.prevent="onFormSubmit()">
       <fieldset>
-        <input type="text" placeholder="Game Code" v-model="entryKey" required>
+        <input type="text" placeholder="Game Code" v-model="entryKey" required maxlength="10">
       </fieldset>
 
       <fieldset>

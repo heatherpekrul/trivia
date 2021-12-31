@@ -28,6 +28,8 @@ export default {
     ...mapGetters('GamesModule', [
       'currentGame',
       'currentGameUsers',
+      'currentQuestion',
+      'currentQuestionAnswers',
       'currentRound',
       'isCurrentGameQuestionScreen',
       'isCurrentGameRoundScreen',

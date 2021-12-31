@@ -1,6 +1,14 @@
 <template>
   <div class="presentation-question">
-    presentation question component
+    <h1>
+      {{ question }}
+    </h1>
+
+    <ol type="A">
+      <li v-for="(option, index) in question.answers" v-bind:key="index">
+        {{ option }}
+      </li>
+    </ol>
   </div>
 </template>
 

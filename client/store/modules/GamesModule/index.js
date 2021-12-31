@@ -12,6 +12,15 @@ export default {
   getters: {
     currentGame: (state) => state.currentGame,
     currentGameUsers: (state) => state.currentGameUsers,
+    currentQuestion: (state) => state?.currentGame?.question,
+    currentQuestionAnswers: (state) => {
+      return [
+        'option 1',
+        'option 2',
+        'option 3',
+        'option 4',
+      ];
+    },
     currentRound: (state) => {
       if (!state.currentGame.round_id) return null;
 
@@ -50,6 +59,9 @@ export default {
     },
     setCurrentGameUsers(state, users) {
       state.currentGameUsers = users;
+    },
+    setCurrentGameQuestionAnswers(state, answers) {
+      state.currentGameQuestionAnswers = answers;
     },
     setJoinedGames(state, games) {
       state.joinedGames = games;
@@ -158,7 +170,7 @@ export default {
      * Load Current Game
      * @param {integer} gameId 
      */
-    async fetchCurrentGame({ commit }, gameId) {
+    async fetchCurrentGame({ commit, dispatch }, gameId) {
       const apiId = 'getCurrentGame';
       commit('apiCallStart', apiId, { root: true });
 
@@ -172,6 +184,10 @@ export default {
         .then((data) => {
           if (!data || data.length !== 1) throw new Error('Invalid game setup');
           commit('setCurrentGame', data[0]);
+
+          if (data.question_id) {
+            dispatch('fetchQuestionAnswers', data.question_id);
+          }
         })
         .catch((e) => {
           throw e;
@@ -236,6 +252,31 @@ export default {
         commit('apiCallEnd', apiId, { root: true });
         if (!response.ok) throw new Error(response.statusText);
         dispatch('fetchCurrentGame', gameId);
+      })
+      .catch((e) => {
+        throw e;
+      });
+    },
+
+    /**
+     * Get Question Answers
+     * @param {integer} questionId
+     */
+    async fetchQuestionAnswers({ commit }, questionId) {
+      const apiId = 'getQuestionAnswers';
+      commit('apiCallStart', apiId, { root: true });
+
+      await fetch(`/api/getQuestionAnswers/${questionId}`, {
+        method: 'GET',
+      })
+      .then((response) => {
+        commit('apiCallEnd', apiId, { root: true });
+        if (!response.ok) throw new Error(response.statusText);
+        return response;
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        commit('setCurrentGameQuestionAnswers', data);
       })
       .catch((e) => {
         throw e;

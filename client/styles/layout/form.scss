@@ -5,20 +5,23 @@ form {
   }
 
   input[type=text] {
-    background: white;
+    background: rgba(black, 0.5);
+    color: $color-white-sand;
     padding: 1rem;
     width: 100%;
     border: none;
-    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
-    transition: box-shadow 0.5s;
+    transition: border 0.5s;
+    border-bottom: 0.25em solid transparent;
+    @include font-primary();
 
     &:focus {
       outline: none;
-      box-shadow: 0px 0px 1rem 0px rgba($color-peach,1);
+      border-bottom-color: $color-peach;
     }
 
     &::placeholder {
-      color: $color-peach;
+      color: $color-white-sand;
+      opacity: 0.75;
     }
   }
 

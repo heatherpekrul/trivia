@@ -36,6 +36,8 @@
 
       <PresentationQuestion
         v-if="isCurrentGameQuestionScreen"
+        :question="currentQuestion"
+        :answers="currentQuestionAnswers"
       />
     </div>
   </div>
