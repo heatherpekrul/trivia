@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const GetDatabaseConnection = require('../../utilities/getDatabaseConnection');
 const IsAuthenticated = require('../../utilities/isAuthenticated');
 const GetUserId = require('../../utilities/getUserId');
 const IsValidId = require('../../utilities/isValidId');
@@ -14,24 +13,24 @@ router.get('/api/getCurrentGame/:gameId', async (req, res) => {
     if (!IsValidId(req.params.gameId)) return res.status(400).send();
     const gameId = req.params.gameId;
 
-    const connection = await GetDatabaseConnection(req);
+    const connection = req.app.get('MYSQL_CONNECTION');
      
     const [rows] = await connection.execute(`
       SELECT games.*, COUNT(*) AS total_rounds
       FROM games
       INNER JOIN rounds ON (rounds.game_id = games.id)
-      WHERE games.id = '${gameId}'
+      WHERE games.id = ?
       AND games.id IN (
         SELECT game_id
         FROM game_participants
-        WHERE user_id = '${userId}'
+        WHERE user_id = ?
         UNION
         SELECT game_id
         FROM games
-        WHERE owner_user_id = '${userId}'
+        WHERE owner_user_id = ?
       )
       GROUP BY games.id, games.name;
-    `);
+    `, [gameId, userId, userId]);
 
     res.setHeader('Content-Type', 'application/json');
     return res.send(rows);

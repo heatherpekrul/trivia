@@ -5,6 +5,9 @@ const Api = require('./api');
 const AuthRedirectMiddleware = require('./middleware/authRedirect');
 const HomePage = require('./pages/home');
 const LoginPage = require('./pages/login');
+const MysqlMiddleware = require('./middleware/mysql');
+
+router.use(MysqlMiddleware);
 
 router.use(Api);
 

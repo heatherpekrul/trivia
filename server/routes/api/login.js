@@ -1,13 +1,12 @@
 const express = require('express');
 const { OAuth2Client } = require('google-auth-library');
 const router  = express.Router();
-const GetDatabaseConnection = require('../../utilities/getDatabaseConnection');
 
 router.post('/api/login', async (req, res) => {
   try {
     const client = new OAuth2Client(req.app.get('GOOGLE_CLIENT_ID'));
 
-    const connection = await GetDatabaseConnection(req);
+    const connection = req.app.get('MYSQL_CONNECTION');
 
     async function verify() {
       const ticket = await client.verifyIdToken({
@@ -27,13 +26,20 @@ router.post('/api/login', async (req, res) => {
       .then(async () => {
         await connection.execute(`
           INSERT INTO users (email, name, image_url)
-          VALUES ('${req.session.user.email}', '${req.session.user.name}', '${req.session.user.image_url}')
-          ON DUPLICATE KEY UPDATE email = '${req.session.user.email}', name = '${req.session.user.name}', image_url = '${req.session.user.image_url}';
-        `);
+          VALUES (?, ?, ?)
+          ON DUPLICATE KEY UPDATE email = ?, name = ?, image_url = ?;
+        `, [
+          req.session.user.email,
+          req.session.user.name,
+          req.session.user.image_url,
+          req.session.user.email,
+          req.session.user.name,
+          req.session.user.image_url,
+        ]);
 
         const [rows] = await connection.execute(`
-          SELECT id FROM users WHERE email = '${req.session.user.email}';
-        `);
+          SELECT id FROM users WHERE email = ?;
+        `, [req.session.user.email]);
 
         req.session.user.id = rows[0].id;
       })

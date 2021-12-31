@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const GetDatabaseConnection = require('../../utilities/getDatabaseConnection');
 const IsAuthenticated = require('../../utilities/isAuthenticated');
 const GetUserId = require('../../utilities/getUserId');
 const IsValidId = require('../../utilities/isValidId');
@@ -11,12 +10,12 @@ router.post('/api/deleteMyData', async (req, res) => {
     const userId = GetUserId(req);
     if (!IsValidId(userId)) return res.status(401).send();
 
-    const connection = await GetDatabaseConnection(req);
+    const connection = req.app.get('MYSQL_CONNECTION');
 
     await connection.execute(`
       DELETE FROM users
-      WHERE users.id = ${userId}
-    `);
+      WHERE users.id = ?
+    `, [userId]);
 
     req.session.destroy((err) => {
       return res.send();
