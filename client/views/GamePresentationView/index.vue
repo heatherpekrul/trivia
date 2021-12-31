@@ -3,10 +3,10 @@
     <div class="game-presentation-view__wrapper" :class="{ 'game-presentation-view__wrapper--full' : isFullScreen}">
       <ProgressBar
         v-if="!isCurrentGameTitleScreen"
-        :currentRound="1"
+        :currentRound="currentGame.round_index"
         :totalRounds="currentGame.total_rounds"
-        :currentQuestion="1"
-        :totalQuestions="5"
+        :currentQuestion="currentGame.question_index"
+        :totalQuestions="currentGame.current_round_total_questions"
       />
 
       <div class="game-presentation-view__wrapper__controls">
@@ -19,7 +19,10 @@
         </button>
       </div>
 
-      <UsersBar :users="currentGameUsers" />
+      <UsersBar
+        v-if="isCurrentGameTitleScreen"
+        :users="currentGameUsers"
+      />
 
       <PresentationTitle
         v-if="isCurrentGameTitleScreen"

@@ -16,7 +16,6 @@
       &:nth-child(n + 20) {
         &:not(:last-child) {
           counter-increment: start-from;
-          background: #333333;
           height: 0;
           width: 0;
           overflow: hidden;

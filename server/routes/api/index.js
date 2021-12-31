@@ -10,6 +10,7 @@ const GetOwnedGames = require('./getOwnedGames');
 const JoinGame = require('./joinGame');
 const Login = require('./login');
 const Logout = require('./logout');
+const ProgressGame = require('./progressGame');
 const RemoveJoinedGame = require('./removeJoinedGame');
 
 router.use(DeleteGame);
@@ -21,6 +22,7 @@ router.use(GetOwnedGames);
 router.use(JoinGame);
 router.use(Login);
 router.use(Logout);
+router.use(ProgressGame);
 router.use(RemoveJoinedGame);
 
 router.get('/api/*', (req, res) => {

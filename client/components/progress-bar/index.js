@@ -2,7 +2,6 @@ export default {
   name: 'ProgressBar',
   props: {
     currentQuestion: {
-      required: true,
       type: Number,
     },
     currentRound: {
@@ -10,7 +9,6 @@ export default {
       type: Number,
     },
     totalQuestions: {
-      required: true,
       type: Number,
     },
     totalRounds: {

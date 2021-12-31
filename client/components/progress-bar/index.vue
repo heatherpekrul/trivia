@@ -4,7 +4,7 @@
       <span>Round</span> {{currentRound}}/{{ totalRounds }}
     </div>
     
-    <div class="progress-bar__question">
+    <div class="progress-bar__question" v-if="currentQuestion && totalQuestions">
       <span>?</span> {{currentQuestion}}/{{totalQuestions}}
     </div>
   </div>

@@ -14,8 +14,8 @@ export default {
     currentGameUsers: (state) => state.currentGameUsers,
     currentRound: (state) => state.currentRound,
     isCurrentGameTitleScreen: (state) => {
-      return !state.currentGame.current_round_id
-        && !state.currentGame.current_question_id
+      return !state.currentGame.round_id
+        && !state.currentGame.question_id
         && !state.currentGame.is_completed;
     },
     joinedGames: (state) => state.joinedGames,
@@ -224,6 +224,27 @@ export default {
       .catch((e) => {
         throw e;
       });
-    }
+    },
+
+    /**
+     * Progress Game
+     * @param {integer} gameId
+     */
+     async progressGame({ commit, dispatch }, gameId) {
+      const apiId = 'progressGame';
+      commit('apiCallStart', apiId, { root: true });
+
+      await fetch(`/api/progressGame/${gameId}`, {
+        method: 'POST',
+      })
+      .then((response) => {
+        commit('apiCallEnd', apiId, { root: true });
+        if (!response.ok) throw new Error(response.statusText);
+        dispatch('fetchCurrentGame', gameId);
+      })
+      .catch((e) => {
+        throw e;
+      });
+    },
   },
 };

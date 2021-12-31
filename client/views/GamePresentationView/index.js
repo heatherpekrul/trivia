@@ -34,10 +34,15 @@ export default {
   methods: {
     ...mapActions('GamesModule', [
       'fetchCurrentGameUsers',
+      'progressGame',
     ]),
 
-    onNextClick() {
+    async onNextClick() {
       console.log('onNextClick');
+      await this.progressGame(this.$route.params.id)
+      .catch((e) => {
+        console.error(e);
+      });
     },
 
     onToggleFullScreenClick() {
