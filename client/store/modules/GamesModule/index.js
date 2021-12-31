@@ -12,7 +12,26 @@ export default {
   getters: {
     currentGame: (state) => state.currentGame,
     currentGameUsers: (state) => state.currentGameUsers,
-    currentRound: (state) => state.currentRound,
+    currentRound: (state) => {
+      if (!state.currentGame.round_id) return null;
+
+      return {
+        name: state.currentGame.round_name,
+        description: state.currentGame.round_description,
+      };
+    },
+    isCurrentGameQuestionScreen: (state) => {
+      return state.currentGame.round_id
+      && !state.currentGame.round_completed
+      && state.currentGame.question_id
+      && !state.currentGame.is_completed;
+    },
+    isCurrentGameRoundScreen: (state) => {
+      return state.currentGame.round_id
+      && !state.currentGame.round_completed
+      && !state.currentGame.question_id
+      && !state.currentGame.is_completed;
+    },
     isCurrentGameTitleScreen: (state) => {
       return !state.currentGame.round_id
         && !state.currentGame.question_id
@@ -31,9 +50,6 @@ export default {
     },
     setCurrentGameUsers(state, users) {
       state.currentGameUsers = users;
-    },
-    setCurrentRound(state, round) {
-      state.currentRound = round;
     },
     setJoinedGames(state, games) {
       state.joinedGames = games;
@@ -65,27 +81,6 @@ export default {
         .then((response) => {
           commit('apiCallEnd', apiId, { root: true });
           if(!response.ok) throw new Error(response.statusText);
-        })
-        .catch((e) => {
-          throw e;
-        });
-    },
-
-    /**
-     * Fetch Current Round
-     * @param {integer} gameId 
-     */
-    async fetchCurrentRound({ commit }, gameId) {
-      const apiId = 'fetchCurrentRound';
-      commit('apiCallStart', apiId, { root: true });
-
-      await fetch(`/api/getCurrentRound/${gameId}`)
-        .then((response) => {
-          commit('apiCallEnd', apiId, { root: true });
-          if (!response.ok) throw new Error(response.statusText);
-
-          const data = response.json();
-          commit('setCurrentRound', data);
         })
         .catch((e) => {
           throw e;

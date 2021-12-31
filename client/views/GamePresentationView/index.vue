@@ -28,10 +28,15 @@
         v-if="isCurrentGameTitleScreen"
         :game="currentGame" 
       />
-      <!--<PresentationRound :round="{
-        name: 'Round 1',
-        description: 'This is another exciting round',
-      }" />-->
+
+      <PresentationRound
+        v-if="isCurrentGameRoundScreen"
+        :round="currentRound"
+      />
+
+      <PresentationQuestion
+        v-if="isCurrentGameQuestionScreen"
+      />
     </div>
   </div>
 </template>

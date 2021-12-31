@@ -10,4 +10,15 @@ const router = new Router({
   routes,
 });
 
+router.afterEach((to, from) => {
+  const default_title = 'Trivia';
+  Vue.nextTick(() => {
+    if (to.meta.title) {
+      document.title = `${to.meta.title} | ${default_title}`;
+    } else {
+      document.title = default_title;
+    }
+  });
+});
+
 export default router;

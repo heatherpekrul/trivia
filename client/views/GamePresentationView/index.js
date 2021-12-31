@@ -28,6 +28,9 @@ export default {
     ...mapGetters('GamesModule', [
       'currentGame',
       'currentGameUsers',
+      'currentRound',
+      'isCurrentGameQuestionScreen',
+      'isCurrentGameRoundScreen',
       'isCurrentGameTitleScreen',
     ]),
   },
@@ -38,7 +41,6 @@ export default {
     ]),
 
     async onNextClick() {
-      console.log('onNextClick');
       await this.progressGame(this.$route.params.id)
       .catch((e) => {
         console.error(e);

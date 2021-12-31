@@ -23,6 +23,7 @@ router.get('/api/getCurrentGame/:gameId', async (req, res) => {
       g1.is_completed,
       r1.id AS round_id, 
       r1.name AS round_name,
+      r1.description AS round_description,
       r1.sort AS round_index,
       r1.is_completed AS round_completed,
       q1.id AS question_id,
