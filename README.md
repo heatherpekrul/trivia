@@ -78,3 +78,10 @@ Stylelint with autofix flag
 ```
 npm run stylelint:fix
 ```
+
+## Production Deployment
+
+```
+npm install --production
+touch /tmp/restart.txt
+```
