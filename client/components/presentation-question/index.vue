@@ -5,8 +5,8 @@
     </h1>
 
     <ol type="A">
-      <li v-for="(option, index) in question.answers" v-bind:key="index">
-        {{ option }}
+      <li v-for="(option, index) in answers" v-bind:key="index">
+        {{ option.answer }}
       </li>
     </ol>
   </div>

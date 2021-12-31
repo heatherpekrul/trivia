@@ -27,9 +27,9 @@ export default {
   computed: {
     ...mapGetters('GamesModule', [
       'currentGame',
+      'currentGameQuestionAnswers',
       'currentGameUsers',
       'currentQuestion',
-      'currentQuestionAnswers',
       'currentRound',
       'isCurrentGameQuestionScreen',
       'isCurrentGameRoundScreen',

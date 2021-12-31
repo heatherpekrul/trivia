@@ -10,19 +10,18 @@ router.get('/api/getQuestionAnswers/:questionId', async (req, res) => {
     const userId = GetUserId(req);
     if (!IsValidId(userId)) return res.status(401).send();
 
-    if (!IsValidId(req.params.gameId)) return res.status(400).send();
+    if (!IsValidId(req.params.questionId)) return res.status(400).send();
     const questionId = req.params.questionId;
 
     const connection = req.app.get('MYSQL_CONNECTION');
      
     const [rows] = await connection.execute(`
-    SELECT
-      id, 
-      answer, 
-      is_correct
-    from answers a  
-    where a.question_id = :questionId 
-    order by a.sort
+      SELECT
+        id, 
+        answer
+      FROM answers a  
+      WHERE a.question_id = ? 
+      ORDER BY a.sort
     `, [questionId]);
 
     res.setHeader('Content-Type', 'application/json');

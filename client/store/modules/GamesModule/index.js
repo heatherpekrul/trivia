@@ -11,16 +11,9 @@ export default {
 
   getters: {
     currentGame: (state) => state.currentGame,
+    currentGameQuestionAnswers: (state) => state.currentGameQuestionAnswers,
     currentGameUsers: (state) => state.currentGameUsers,
     currentQuestion: (state) => state?.currentGame?.question,
-    currentQuestionAnswers: (state) => {
-      return [
-        'option 1',
-        'option 2',
-        'option 3',
-        'option 4',
-      ];
-    },
     currentRound: (state) => {
       if (!state.currentGame.round_id) return null;
 
@@ -185,8 +178,8 @@ export default {
           if (!data || data.length !== 1) throw new Error('Invalid game setup');
           commit('setCurrentGame', data[0]);
 
-          if (data.question_id) {
-            dispatch('fetchQuestionAnswers', data.question_id);
+          if (data[0].question_id) {
+            dispatch('fetchQuestionAnswers', data[0].question_id);
           }
         })
         .catch((e) => {
