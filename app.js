@@ -3,6 +3,8 @@ const dotenv = require('dotenv').config();
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const bluebird = require('bluebird');
+const mysql = require('mysql2/promise');
 
 /* CONFIG */
 const app = express();
@@ -23,6 +25,19 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+/* MYSQL POOL */
+const connection = mysql.createPool({
+  host : app.get('MYSQL_HOST'),
+  user : app.get('MYSQL_USER'),
+  password : app.get('MYSQL_PASSWORD'),
+  database : app.get('MYSQL_DB'),
+  Promise: bluebird,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
+app.set('MYSQL_CONNECTION', connection);
 
 /* SESSIONS */
 const MySQLStore = require('express-mysql-session')(session);
