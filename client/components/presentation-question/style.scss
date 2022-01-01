@@ -9,13 +9,25 @@
 
   &__options {
     font-size: 1.25rem;
+    counter-reset: scores;
+    list-style: none;
 
     &__option {
       transition: 0.5s color;
+      counter-increment: scores;
+
+      &::before {
+        color: $color-sunstone;
+        content: counter(scores, upper-alpha) ')';
+        display: inline-block;
+        vertical-align: middle;
+        @include font-accent();
+      }
 
       &::after {
         content: $emoji-peach;
         display: inline-block;
+        vertical-align: middle;
         opacity: 0;
         padding-left: 2rem;
         transition: 0.5s opacity, 0.5s padding-left;
