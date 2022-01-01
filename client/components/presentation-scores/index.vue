@@ -1,6 +1,9 @@
 <template>
   <div class="presentation-scores">
     <h1>
+      <template v-if="isFinal">
+        Final
+      </template>
       Scores
     </h1>
 

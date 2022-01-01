@@ -5,7 +5,12 @@
     </h1>
 
     <ol type="A" class="presentation-question__options">
-      <li v-for="(option, index) in answers" v-bind:key="index">
+      <li
+        v-for="(option, index) in answers"
+        v-bind:key="index"
+        class="presentation-question__options__option"
+        :class="{ correct: showCorrectAnswer && option.is_correct }"
+      >
         {{ option.answer }}
       </li>
     </ol>

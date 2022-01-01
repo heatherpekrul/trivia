@@ -22,6 +22,7 @@ export default {
   data() {
     return {
       isFullScreen: false,
+      isShowAnswers: false,
     };
   },
   computed: {
@@ -42,10 +43,24 @@ export default {
     ...mapActions('GamesModule', [
       'fetchCurrentGameUsers',
       'progressGame',
+      'regressGame',
     ]),
+
+    async onBackClick() {
+      await this.regressGame(this.$route.params.id)
+      .then(() => {
+        this.isShowAnswers = false;
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+    },
 
     async onNextClick() {
       await this.progressGame(this.$route.params.id)
+      .then(() => {
+        this.isShowAnswers = false;
+      })
       .catch((e) => {
         console.error(e);
       });
@@ -53,6 +68,10 @@ export default {
 
     onToggleFullScreenClick() {
       this.isFullScreen = !this.isFullScreen;
+    },
+
+    onToggleShowAnswersClick() {
+      this.isShowAnswers = !this.isShowAnswers;
     },
   },
 };

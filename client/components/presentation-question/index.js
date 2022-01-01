@@ -9,5 +9,10 @@ export default {
       required: true,
       type: Array,
     },
+    showCorrectAnswer: {
+      required: true,
+      type: Boolean,
+      default: false,
+    },
   },
 };

@@ -9,5 +9,26 @@
 
   &__options {
     font-size: 1.25rem;
+
+    &__option {
+      transition: 0.5s color;
+
+      &::after {
+        content: $emoji-peach;
+        display: inline-block;
+        opacity: 0;
+        padding-left: 2rem;
+        transition: 0.5s opacity, 0.5s padding-left;
+      }
+
+      &.correct {
+        color: $color-peach;
+
+        &::after {
+          opacity: 1;
+          padding-left: 0;
+        }
+      }
+    }
   }
 }

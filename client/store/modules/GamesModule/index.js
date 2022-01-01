@@ -272,6 +272,27 @@ export default {
     },
 
     /**
+     * Regress Game
+     * @param {integer} gameId
+     */
+     async regressGame({ commit, dispatch }, gameId) {
+      const apiId = 'regressGame';
+      commit('apiCallStart', apiId, { root: true });
+
+      await fetch(`/api/regressGame/${gameId}`, {
+        method: 'POST',
+      })
+      .then((response) => {
+        commit('apiCallEnd', apiId, { root: true });
+        if (!response.ok) throw new Error(response.statusText);
+        dispatch('fetchCurrentGame', gameId);
+      })
+      .catch((e) => {
+        throw e;
+      });
+    },
+
+    /**
      * Get Question Answers
      * @param {integer} questionId
      */

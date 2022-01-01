@@ -6,6 +6,9 @@ export default {
     User,
   },
   props: {
+    isFinal: {
+      default: false,
+    },
     scores: {
       required: true,
       type: Array,

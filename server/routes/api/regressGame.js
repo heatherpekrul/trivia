@@ -4,30 +4,24 @@ const IsAuthenticated = require('../../utilities/isAuthenticated');
 const GetUserId = require('../../utilities/getUserId');
 const IsValidId = require('../../utilities/isValidId');
 
-router.get('/api/getQuestionAnswers/:questionId', async (req, res) => {
+router.post('/api/regressGame/:gameId', async (req, res) => {
   try {
     if (!IsAuthenticated(req)) return res.status(401).send();
     const userId = GetUserId(req);
     if (!IsValidId(userId)) return res.status(401).send();
-
-    if (!IsValidId(req.params.questionId)) return res.status(400).send();
-    const questionId = req.params.questionId;
+  
+    if (!IsValidId(req.params.gameId)) return res.status(400).send();
+    const gameId = req.params.gameId;
 
     const connection = req.app.get('MYSQL_CONNECTION');
-     
-    const [rows] = await connection.execute(`
-      SELECT
-        id, 
-        answer,
-        is_correct
-      FROM answers a  
-      WHERE a.question_id = ? 
-      ORDER BY a.sort
-    `, [questionId]);
+
+    await connection.execute(`
+      CALL rollbackGame(?,?)
+    `, [gameId, userId]);
 
     res.setHeader('Content-Type', 'application/json');
-    return res.send(rows);
-  } catch (e) {
+    return res.send();
+  } catch(e) {
     console.error(e);
     return res.status(500).send();
   }

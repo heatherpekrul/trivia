@@ -50,7 +50,7 @@ LOG_LEVEL=INFO
 
 ### Start server
 ```
-npm run start:server
+npm run watch
 ```
 
 ## Linting

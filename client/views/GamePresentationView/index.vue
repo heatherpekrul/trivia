@@ -14,7 +14,20 @@
           Toggle Full Screen
         </button>
 
-        <button @click="onNextClick()">
+        <button @click="onToggleShowAnswersClick()">
+          Toggle Show Answers
+        </button>
+
+        <button
+          v-if="!isCurrentGameTitleScreen"
+          @click="onBackClick()"
+        >
+          Back
+        </button>
+
+        <button 
+          v-if="!currentGame.is_completed"
+          @click="onNextClick()">
           Next
         </button>
       </div>
@@ -36,6 +49,7 @@
 
       <PresentationScores
         v-if="isCurrentGameScoreScreen"
+        :isFinal="currentGame.is_completed"
         :scores="currentScores"
       />
 
@@ -43,6 +57,7 @@
         v-if="isCurrentGameQuestionScreen"
         :question="currentQuestion"
         :answers="currentGameQuestionAnswers"
+        :showCorrectAnswer="isShowAnswers"
       />
     </div>
   </div>
