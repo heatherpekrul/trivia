@@ -29,7 +29,7 @@ router.get('/api/getCurrentGame/:gameId', async (req, res) => {
       q1.id AS question_id,
       q1.question,
       q1.sort AS question_index,
-      q1.image_url,
+      q1.image_url AS question_image_url,
       (
         SELECT COUNT(*)
         FROM rounds

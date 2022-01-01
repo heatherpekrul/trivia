@@ -1,14 +1,20 @@
 <template>
   <div class="presentation-question">
-    <h1>
-      {{ question }}
+    <h1 class="presentation-question__question">
+      {{ question.question }}
     </h1>
 
-    <ol type="A">
+    <ol type="A" class="presentation-question__options">
       <li v-for="(option, index) in answers" v-bind:key="index">
         {{ option.answer }}
       </li>
     </ol>
+
+    <img
+      v-if="question.image_url"
+      :src="question.image_url"
+      :alt="question.question"
+    >
   </div>
 </template>
 

@@ -13,7 +13,12 @@ export default {
     currentGame: (state) => state.currentGame,
     currentGameQuestionAnswers: (state) => state.currentGameQuestionAnswers,
     currentGameUsers: (state) => state.currentGameUsers,
-    currentQuestion: (state) => state?.currentGame?.question,
+    currentQuestion: (state) => {
+      return {
+        question: state?.currentGame?.question,
+        image_url: state?.currentGame?.question_image_url,
+      };
+    },
     currentRound: (state) => {
       if (!state.currentGame.round_id) return null;
 
@@ -22,6 +27,7 @@ export default {
         description: state.currentGame.round_description,
       };
     },
+    currentScores: (state) => state.currentScores,
     isCurrentGameQuestionScreen: (state) => {
       return state.currentGame.round_id
       && !state.currentGame.round_completed
@@ -33,6 +39,13 @@ export default {
       && !state.currentGame.round_completed
       && !state.currentGame.question_id
       && !state.currentGame.is_completed;
+    },
+    isCurrentGameScoreScreen: (state) => {
+      return (
+        state.currentGame.round_id
+        && state.currentGame.round_completed
+        && !state.currentGame.question_id
+      ) || state.currentGame.is_completed;
     },
     isCurrentGameTitleScreen: (state) => {
       return !state.currentGame.round_id
@@ -55,6 +68,9 @@ export default {
     },
     setCurrentGameQuestionAnswers(state, answers) {
       state.currentGameQuestionAnswers = answers;
+    },
+    setCurrentScores(state, scores) {
+      state.currentScores = scores;
     },
     setJoinedGames(state, games) {
       state.joinedGames = games;
@@ -181,6 +197,10 @@ export default {
           if (data[0].question_id) {
             dispatch('fetchQuestionAnswers', data[0].question_id);
           }
+
+          if (data[0].round_completed || data[0].is_completed) {
+            dispatch('fetchGameScores', gameId);
+          }
         })
         .catch((e) => {
           throw e;
@@ -275,5 +295,30 @@ export default {
         throw e;
       });
     },
+
+    /**
+     * Fetch Game Scores
+     * @param {integer} gameId
+     */
+    async fetchGameScores({ commit }, gameId) {
+      const apiId = 'getGameScore';
+      commit('apiCallStart', apiId, { root: true });
+
+      await fetch(`/api/getGameScore/${gameId}`, {
+        method: 'GET',
+      })
+      .then((response) => {
+        commit('apiCallEnd', apiId, { root: true });
+        if (!response.ok) throw new Error(response.statusText);
+        return response;
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        commit('setCurrentScores', data);
+      })
+      .catch((e) => {
+        throw e;
+      });
+    }
   },
 };

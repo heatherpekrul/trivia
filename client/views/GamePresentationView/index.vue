@@ -2,7 +2,7 @@
   <div class="game-presentation-view">
     <div class="game-presentation-view__wrapper" :class="{ 'game-presentation-view__wrapper--full' : isFullScreen}">
       <ProgressBar
-        v-if="!isCurrentGameTitleScreen"
+        v-if="!isCurrentGameTitleScreen && currentGame.round_index"
         :currentRound="currentGame.round_index"
         :totalRounds="currentGame.total_rounds"
         :currentQuestion="currentGame.question_index"
@@ -32,6 +32,11 @@
       <PresentationRound
         v-if="isCurrentGameRoundScreen"
         :round="currentRound"
+      />
+
+      <PresentationScores
+        v-if="isCurrentGameScoreScreen"
+        :scores="currentScores"
       />
 
       <PresentationQuestion

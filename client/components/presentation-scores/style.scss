@@ -1,1 +1,32 @@
-// .presentation-scores
+.presentation-scores {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-shadow: 0px 0px 0.25rem rgba(black, 0.75);
+
+  &__list {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem;
+
+    &__item {
+      padding: 0 1rem;
+      font-size: 0.85rem;
+
+      .user,
+      &__score {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      &__score {
+        @include font-accent();
+        padding: 0 1rem;
+        color: $color-sunstone;
+      }
+    }
+  }
+}
