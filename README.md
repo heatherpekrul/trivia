@@ -79,6 +79,18 @@ Stylelint with autofix flag
 npm run stylelint:fix
 ```
 
+### Testing
+
+#### Run unit tests
+```
+npm run test:unit
+```
+
+#### Clear test cache
+```
+npm run test:clear
+```
+
 ## Production Deployment
 
 ```
