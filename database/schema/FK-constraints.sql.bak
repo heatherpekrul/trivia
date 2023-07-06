@@ -1,0 +1,58 @@
+alter table answers add CONSTRAINT `fk_answers_questions`
+    FOREIGN KEY (`question_id`)
+    REFERENCES `questions` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
+
+alter table game_participants add CONSTRAINT `fk_game_participants_games1`
+    FOREIGN KEY (`game_id`)
+    REFERENCES `games` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+alter table game_participants add CONSTRAINT `fk_game_participants_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `users` (`id`)
+    ON DELETE cascade
+    ON UPDATE NO ACTION;
+
+
+alter table games add CONSTRAINT `fk_games_questions1`
+    FOREIGN KEY (`current_question_id`)
+    REFERENCES `questions` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+ alter table games add CONSTRAINT `fk_games_users1`
+    FOREIGN KEY (`owner_user_id`)
+    REFERENCES `users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+alter table games add CONSTRAINT `fk_games_rounds1`
+    FOREIGN KEY (`current_round_id`)
+    REFERENCES `rounds` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;  
+
+
+alter table questions add CONSTRAINT `fk_questions_rounds1`
+    FOREIGN KEY (`round_id`)
+    REFERENCES `rounds` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+alter table responses add CONSTRAINT `fk_responses_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+alter table responses add CONSTRAINT `fk_responses_answers1`
+    FOREIGN KEY (`answers_id`)
+    REFERENCES `answers` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+alter table rounds add CONSTRAINT `fk_rounds_games1`
+    FOREIGN KEY (`game_id`)
+    REFERENCES `games` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
