@@ -7,6 +7,8 @@ const bluebird = require('bluebird');
 const mysql = require('mysql2/promise');
 const https = require('https');
 const fs = require('fs');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 
 /* CONFIG */
@@ -14,7 +16,7 @@ const app = express();
 const port = process.env.APP_PORT;
 app.set('views', path.join(__dirname, '/server/views'));
 app.set('view engine', 'ejs');
-app.set('GOOGLE_CLIENT_ID', '329235712483-f2isifu37ih9eguiaha6aoe4hgeafkh3.apps.googleusercontent.com');
+app.set('GOOGLE_CLIENT_ID', process.env.GOOGLE_CLIENT_ID);
 app.set('SESSION_SECRET', process.env.SESSION_SECRET);
 app.set('COOKIE_MAX_AGE', 1000 * 60 * 60 * 24); // 24 hours
 app.set('MYSQL_HOST', process.env.MYSQL_HOST);
@@ -55,6 +57,7 @@ const mysqlSessionConfig = {
   user: app.get('MYSQL_USER'),
   password: app.get('MYSQL_PASSWORD'),
   database: app.get('MYSQL_DB'),
+  createDatabaseTable: true
 };
 
 const sessionStore = new MySQLStore(mysqlSessionConfig);
@@ -76,6 +79,26 @@ if (app.get('env') === 'production') {
 }
 
 app.use(session(sessionConfig));
+
+
+/* Passport config */
+
+let userProfile;
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+app.get('/success', (req, res) => res.send(userProfile));
+app.get('/error', (req, res) => res.send("error logging in"));
+
+passport.serializeUser(function (user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function (obj, cb) {
+  cb(null, obj);
+});
 
 /* ROUTES */
 app.use('/', require('./server/routes'));
@@ -99,6 +122,28 @@ if (process.env.HMR_ENABLED === 'true') {
     heartbeat: 10 * 1000,
   }));
 }
+
+/* Google Config */
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_SECRET,
+  callbackURL: "https://localhost:3001/auth/google/callback"
+},
+  function (accessToken, refreshToken, profile, done) {
+    userProfile = profile;
+    return done(null, userProfile);
+  }
+));
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/error' }),
+  function (req, res) {
+    // Successful authentication, redirect success.
+    res.redirect('/success');
+  });
 
 /* HEY, LISTEN! */
 // app.listen(port, () => {

@@ -1,6 +1,6 @@
 const express = require('express');
 const { OAuth2Client } = require('google-auth-library');
-const router  = express.Router();
+const router = express.Router();
 
 router.post('/api/login', async (req, res) => {
   try {
@@ -24,17 +24,14 @@ router.post('/api/login', async (req, res) => {
 
     await verify()
       .then(async () => {
+        //users[id, email, created]
         await connection.execute(`
-          INSERT INTO users (email, name, image_url)
-          VALUES (?, ?, ?)
-          ON DUPLICATE KEY UPDATE email = ?, name = ?, image_url = ?;
+          INSERT INTO users (email)
+          VALUES (?)
+          ON DUPLICATE KEY UPDATE email = ?;
         `, [
           req.session.user.email,
-          req.session.user.name,
-          req.session.user.image_url,
-          req.session.user.email,
-          req.session.user.name,
-          req.session.user.image_url,
+          req.session.user.email
         ]);
 
         const [rows] = await connection.execute(`
