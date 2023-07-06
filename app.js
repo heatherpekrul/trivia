@@ -5,6 +5,9 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const bluebird = require('bluebird');
 const mysql = require('mysql2/promise');
+const https = require('https');
+const fs = require('fs');
+
 
 /* CONFIG */
 const app = express();
@@ -26,12 +29,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+
+
+
 /* MYSQL POOL */
 const connection = mysql.createPool({
-  host : app.get('MYSQL_HOST'),
-  user : app.get('MYSQL_USER'),
-  password : app.get('MYSQL_PASSWORD'),
-  database : app.get('MYSQL_DB'),
+  host: app.get('MYSQL_HOST'),
+  user: app.get('MYSQL_USER'),
+  password: app.get('MYSQL_PASSWORD'),
+  database: app.get('MYSQL_DB'),
   Promise: bluebird,
   waitForConnections: true,
   connectionLimit: 10,
@@ -44,11 +50,11 @@ const MySQLStore = require('express-mysql-session')(session);
 
 const mysqlSessionConfig = {
   connectionLimit: 10,
-	host: app.get('MYSQL_HOST'),
-	port: app.get('MYSQL_PORT'),
-	user: app.get('MYSQL_USER'),
-	password: app.get('MYSQL_PASSWORD'),
-	database: app.get('MYSQL_DB'),
+  host: app.get('MYSQL_HOST'),
+  port: app.get('MYSQL_PORT'),
+  user: app.get('MYSQL_USER'),
+  password: app.get('MYSQL_PASSWORD'),
+  database: app.get('MYSQL_DB'),
 };
 
 const sessionStore = new MySQLStore(mysqlSessionConfig);
@@ -95,6 +101,16 @@ if (process.env.HMR_ENABLED === 'true') {
 }
 
 /* HEY, LISTEN! */
-app.listen(port, () => {
-  console.log(`Trivia app listening at http://localhost:${port}`);
+// app.listen(port, () => {
+//   console.log(`Trivia app listening at http://localhost:${port}`);
+// });
+
+const httpsOptions = {
+  key: fs.readFileSync('ca.key'),
+  cert: fs.readFileSync('ca.crt')
+};
+
+
+const httpsServer = https.createServer(httpsOptions, app).listen(3001, () => {
+  console.log('server running at ' + 3001)
 });
