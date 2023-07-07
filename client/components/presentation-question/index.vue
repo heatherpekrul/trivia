@@ -11,7 +11,11 @@
         class="presentation-question__options__option"
         :class="{ correct: showCorrectAnswer && option.is_correct }"
       >
-        {{ option.answer }}
+        <!-- {{ option.answer }} -->
+        <PresentationAnswer
+          :answer="option"
+          :showCorrectAnswer="showCorrectAnswer"
+        />
       </li>
     </ol>
 

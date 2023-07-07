@@ -23,7 +23,7 @@ export default [
         meta: {
           title: 'Login'
         },
-        component: () => import (
+        component: () => import(
           /* webpackChunkName: "login" */ '../views/LoginView/index.vue'
         ),
       },
@@ -33,7 +33,7 @@ export default [
         meta: {
           title: 'Present Game'
         },
-        component: () => import (
+        component: () => import(
           /* webpackChunkName: "present" */ '../views/GamePresentationView/index.vue'
         ),
         beforeEnter: async (to, from, next) => {
@@ -46,7 +46,7 @@ export default [
               console.error(e);
               next({ name: 'NotFoundView' });
             });
-          },
+        },
       },
       {
         path: '/game/:id',
@@ -54,9 +54,20 @@ export default [
         meta: {
           title: 'Game'
         },
-        component: () => import (
+        component: () => import(
           /* webpackChunkName: "game" */ '../views/GameParticipantView/index.vue'
         ),
+        beforeEnter: async (to, from, next) => {
+          await store.dispatch('GamesModule/fetchCurrentGame', to.params.id)
+            .then(() => {
+              to.meta.title = `${store.getters['GamesModule/currentGame'].name} | ${to.meta.title}`;
+              next();
+            })
+            .catch((e) => {
+              console.error(e);
+              next({ name: 'NotFoundView' });
+            });
+        }
       },
       {
         path: '/join-game',
@@ -64,7 +75,7 @@ export default [
         meta: {
           title: 'Join Game'
         },
-        component: () => import (
+        component: () => import(
           /* webpackChunkName: "join" */ '../views/JoinGameView/index.vue'
         ),
       },
@@ -74,7 +85,7 @@ export default [
         meta: {
           title: 'Delete My Data'
         },
-        component: () => import (
+        component: () => import(
           /* webpackChunkName: "delete-my-data" */ '../views/DeleteMyDataView/index.vue'
         ),
       },
@@ -85,7 +96,7 @@ export default [
         meta: {
           title: '404 Not Found'
         },
-        component: () => import (
+        component: () => import(
           /* webpackChunkName: "not-found" */ '../views/NotFoundView/index.vue'
         ),
       },

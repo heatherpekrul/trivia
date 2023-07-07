@@ -14,6 +14,8 @@ router.get('/api/getCurrentGame/:gameId', async (req, res) => {
     const gameId = req.params.gameId;
 
     const connection = req.app.get('MYSQL_CONNECTION');
+
+    console.info('server:/api/getCurrentGame/',gameId);
      
     const [rows] = await connection.execute(`
     SELECT 

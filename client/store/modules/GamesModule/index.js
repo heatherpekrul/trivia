@@ -54,6 +54,7 @@ export default {
     },
     joinedGames: (state) => state.joinedGames,
     ownedGames: (state) => state.ownedGames,
+    isShowAnswers: (state) => false,
   },
 
   mutations: {
@@ -181,6 +182,7 @@ export default {
      */
     async fetchCurrentGame({ commit, dispatch }, gameId) {
       const apiId = 'getCurrentGame';
+      console.info('Loading game for id:', gameId);
       commit('apiCallStart', apiId, { root: true });
 
       await fetch(`/api/getCurrentGame/${gameId}`)
@@ -340,6 +342,10 @@ export default {
       .catch((e) => {
         throw e;
       });
-    }
+    },
+
+    /**
+     * Submit Answer for User+Question
+     */
   },
 };
