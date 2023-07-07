@@ -30,15 +30,15 @@ export default {
     currentScores: (state) => state.currentScores,
     isCurrentGameQuestionScreen: (state) => {
       return state.currentGame.round_id
-      && !state.currentGame.round_completed
-      && state.currentGame.question_id
-      && !state.currentGame.is_completed;
+        && !state.currentGame.round_completed
+        && state.currentGame.question_id
+        && !state.currentGame.is_completed;
     },
     isCurrentGameRoundScreen: (state) => {
       return state.currentGame.round_id
-      && !state.currentGame.round_completed
-      && !state.currentGame.question_id
-      && !state.currentGame.is_completed;
+        && !state.currentGame.round_completed
+        && !state.currentGame.question_id
+        && !state.currentGame.is_completed;
     },
     isCurrentGameScoreScreen: (state) => {
       return (
@@ -98,11 +98,11 @@ export default {
       commit('apiCallStart', apiId, { root: true });
 
       await fetch(`/api/deleteGame/${gameId}`, {
-          method: 'POST',
-        })
+        method: 'POST',
+      })
         .then((response) => {
           commit('apiCallEnd', apiId, { root: true });
-          if(!response.ok) throw new Error(response.statusText);
+          if (!response.ok) throw new Error(response.statusText);
         })
         .catch((e) => {
           throw e;
@@ -167,13 +167,13 @@ export default {
       await fetch(`/api/joinGame/${entryKey}`, {
         method: 'POST',
       })
-      .then((response) => {
-        commit('apiCallEnd', apiId, { root: true });
-        if (!response.ok) throw new Error(response.statusText);
-      })
-      .catch((e) => {
-        throw e;
-      });
+        .then((response) => {
+          commit('apiCallEnd', apiId, { root: true });
+          if (!response.ok) throw new Error(response.statusText);
+        })
+        .catch((e) => {
+          throw e;
+        });
     },
 
     /**
@@ -243,55 +243,55 @@ export default {
       await fetch(`/api/removeJoinedGame/${gameId}`, {
         method: 'POST',
       })
-      .then((response) => {
-        commit('apiCallEnd', apiId, { root: true });
-        if (!response.ok) throw new Error(response.statusText);
-      })
-      .catch((e) => {
-        throw e;
-      });
+        .then((response) => {
+          commit('apiCallEnd', apiId, { root: true });
+          if (!response.ok) throw new Error(response.statusText);
+        })
+        .catch((e) => {
+          throw e;
+        });
     },
 
     /**
      * Progress Game
      * @param {integer} gameId
      */
-     async progressGame({ commit, dispatch }, gameId) {
+    async progressGame({ commit, dispatch }, gameId) {
       const apiId = 'progressGame';
       commit('apiCallStart', apiId, { root: true });
 
       await fetch(`/api/progressGame/${gameId}`, {
         method: 'POST',
       })
-      .then((response) => {
-        commit('apiCallEnd', apiId, { root: true });
-        if (!response.ok) throw new Error(response.statusText);
-        dispatch('fetchCurrentGame', gameId);
-      })
-      .catch((e) => {
-        throw e;
-      });
+        .then((response) => {
+          commit('apiCallEnd', apiId, { root: true });
+          if (!response.ok) throw new Error(response.statusText);
+          dispatch('fetchCurrentGame', gameId);
+        })
+        .catch((e) => {
+          throw e;
+        });
     },
 
     /**
      * Regress Game
      * @param {integer} gameId
      */
-     async regressGame({ commit, dispatch }, gameId) {
+    async regressGame({ commit, dispatch }, gameId) {
       const apiId = 'regressGame';
       commit('apiCallStart', apiId, { root: true });
 
       await fetch(`/api/regressGame/${gameId}`, {
         method: 'POST',
       })
-      .then((response) => {
-        commit('apiCallEnd', apiId, { root: true });
-        if (!response.ok) throw new Error(response.statusText);
-        dispatch('fetchCurrentGame', gameId);
-      })
-      .catch((e) => {
-        throw e;
-      });
+        .then((response) => {
+          commit('apiCallEnd', apiId, { root: true });
+          if (!response.ok) throw new Error(response.statusText);
+          dispatch('fetchCurrentGame', gameId);
+        })
+        .catch((e) => {
+          throw e;
+        });
     },
 
     /**
@@ -305,18 +305,18 @@ export default {
       await fetch(`/api/getQuestionAnswers/${questionId}`, {
         method: 'GET',
       })
-      .then((response) => {
-        commit('apiCallEnd', apiId, { root: true });
-        if (!response.ok) throw new Error(response.statusText);
-        return response;
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        commit('setCurrentGameQuestionAnswers', data);
-      })
-      .catch((e) => {
-        throw e;
-      });
+        .then((response) => {
+          commit('apiCallEnd', apiId, { root: true });
+          if (!response.ok) throw new Error(response.statusText);
+          return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          commit('setCurrentGameQuestionAnswers', data);
+        })
+        .catch((e) => {
+          throw e;
+        });
     },
 
     /**
@@ -330,22 +330,48 @@ export default {
       await fetch(`/api/getGameScore/${gameId}`, {
         method: 'GET',
       })
-      .then((response) => {
-        commit('apiCallEnd', apiId, { root: true });
-        if (!response.ok) throw new Error(response.statusText);
-        return response;
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        commit('setCurrentScores', data);
-      })
-      .catch((e) => {
-        throw e;
-      });
+        .then((response) => {
+          commit('apiCallEnd', apiId, { root: true });
+          if (!response.ok) throw new Error(response.statusText);
+          return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          commit('setCurrentScores', data);
+        })
+        .catch((e) => {
+          throw e;
+        });
     },
 
     /**
      * Submit Answer for User+Question
+     * @param {integer} gameId
      */
+    async submitAnswer({ commit }, answerId) {
+      console.info('Making it to GameModules submitAnswer');
+      const apiId = 'submitAnswer';
+      commit('apiCallStart', apiId, { root: true });
+
+      await fetch(`/api/submitAnswer`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          answerId: answerId
+        })
+      })
+        .then((response) => {
+          commit('apiCallEnd', apiId, { root: true });
+          if (!response.ok) throw new Error(response.statusText);
+          return response;
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          commit('setCurrentScores', data);
+        })
+        .catch((e) => {
+          throw e;
+        });
+    },
   },
 };
